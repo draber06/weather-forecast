@@ -1,10 +1,12 @@
 import React from "react";
-import "antd/dist/reset.css";
 import { useGetWeatherForecastsQuery } from "./app/services/yandex-weather";
-
-function errors(err: GeolocationPositionError) {
-	console.warn(`ERROR(${err.code}): ${err.message}`);
-}
+import { useAppDispatch, useTypedSelector } from "./app/store";
+import {
+	addLocation,
+	selectActiveLocation,
+	selectLocations,
+	setLocationError,
+} from "./locations-slice";
 
 const options: PositionOptions = {
 	enableHighAccuracy: true,
@@ -13,10 +15,11 @@ const options: PositionOptions = {
 };
 
 function App() {
-	const [coords, setCoords] = React.useState<GeolocationCoordinates | null>(null);
+	const dispatch = useAppDispatch();
+	const activeLocation = useTypedSelector(selectActiveLocation);
 	const { data } = useGetWeatherForecastsQuery(
-		{ lat: coords?.latitude, lon: coords?.longitude },
-		{ skip: !coords }
+		{ lat: activeLocation?.latitude, lon: activeLocation?.longitude },
+		{ skip: !activeLocation }
 	);
 
 	React.useEffect(() => {
@@ -26,11 +29,14 @@ function App() {
 					case "granted":
 					case "prompt":
 						navigator.geolocation.getCurrentPosition(
-							(pos) => {
-								setCoords(pos.coords);
-							},
-							// TODO Show errors?
-							errors,
+							(pos) =>
+								dispatch(
+									addLocation({
+										latitude: pos.coords.latitude,
+										longitude: pos.coords.longitude,
+									})
+								),
+							(err) => dispatch(setLocationError(err)),
 							options
 						);
 						break;
@@ -38,17 +44,14 @@ function App() {
 						// TODO show button "Разрешить доступ к данным геопозиции"
 						console.log(res.state);
 				}
-				res.onchange = function () {
-					console.log(res.state);
-				};
 			});
 		} else {
 			console.log("Oops! It looks like Geolocation API is not supported by the browser.");
 		}
 	}, []);
 
-	console.log("-----", "data", data);
-	console.log("-----", "coords", coords);
+	console.log("-----", "activeLocation", activeLocation);
+	console.log(`-----data = `, JSON.stringify(data, null, 4));
 
 	return <div>Hello</div>;
 }

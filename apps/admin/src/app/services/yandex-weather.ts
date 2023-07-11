@@ -1,20 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface WeatherForecast {
-	id: string;
-	name: string;
-}
-
-type WeatherForecastResponse = WeatherForecast[];
+import { Weather } from "types";
 
 const { protocol, hostname } = window.location;
 const baseUrl = `${protocol}//${hostname}:5001`;
 
 export const api = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl }),
-	tagTypes: ["Weather Forecast"],
+	// tagTypes: ["Weather Forecast"],
 	endpoints: (build) => ({
-		getWeatherForecasts: build.query<WeatherForecastResponse, { lat: string; lon: string }>({
+		getWeatherForecasts: build.query<Weather, { lat: number; lon: number }>({
 			query: (pos) => ({
 				url: "/forecast",
 				params: pos,
