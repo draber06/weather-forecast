@@ -117,13 +117,16 @@ function App() {
 		},
 	];
 
+	const title =
+		weather.geo_object.district.name[0].toUpperCase() +
+		weather.geo_object.district.name.slice(1) +
+		", " +
+		weather.geo_object.locality.name;
+
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
 			<Content>
-				<Typography.Title style={{ fontSize: 24 }}>
-					Погода в{" "}
-					{weather.geo_object.district.name + ", " + weather.geo_object.locality.name}
-				</Typography.Title>
+				<Typography.Title style={{ fontSize: 24 }}>Погода в {title}</Typography.Title>
 
 				<Space align="start">
 					<Card style={{ width: 240 }}>
