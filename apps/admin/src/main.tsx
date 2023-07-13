@@ -4,6 +4,7 @@ import App from "./app";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 
+import "./main.css";
 import "antd/dist/reset.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

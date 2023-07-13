@@ -7,9 +7,11 @@ import {
 	selectLocations,
 	setLocationError,
 } from "./locations-slice";
-import { List, Typography } from "antd";
+import { Card, Col, Descriptions, Layout, List, Row, Space, Typography } from "antd";
 import { Fact } from "types";
 import l from "./ru.json";
+
+const { Content } = Layout;
 
 const options: PositionOptions = {
 	enableHighAccuracy: true,
@@ -99,7 +101,7 @@ function App() {
 		{
 			title: "Описание",
 			// TODO add translation system?
-			description: (l as { [key: string]: any })[weather.fact.condition],
+			description: (l.condition as { [key: string]: any })[weather.fact.condition],
 		},
 		{
 			title: "Скорость ветра",
@@ -116,19 +118,35 @@ function App() {
 	];
 
 	return (
-		<div>
-			<List
-				bordered
-				dataSource={dataSource}
-				renderItem={(item) => (
-					<List.Item>
-						<Typography.Text strong>{item.title}</Typography.Text> {item.description}
-					</List.Item>
-				)}
-			/>
-			<br />
-			{JSON.stringify(activeLocation, null, 4)}
-		</div>
+		<Layout style={{ minHeight: "100vh" }}>
+			<Content>
+				<Typography.Title style={{ fontSize: 24 }}>
+					Погода в{" "}
+					{weather.geo_object.district.name + ", " + weather.geo_object.locality.name}
+				</Typography.Title>
+
+				<Space align="start">
+					<Card style={{ width: 240 }}>
+						<Typography.Text>Сейчас</Typography.Text>
+					</Card>
+
+					<Descriptions column={1} size="small">
+						<Descriptions.Item label="Ощущается">
+							+{weather.fact.feels_like}°
+						</Descriptions.Item>
+						<Descriptions.Item label="Скорость ветра">
+							{weather.fact.wind_speed} м/с
+						</Descriptions.Item>
+						<Descriptions.Item label="Давление">
+							{weather.fact.pressure_mm} мм рт. ст.{" "}
+						</Descriptions.Item>
+						<Descriptions.Item label="Влажность">
+							{weather.fact.humidity}%
+						</Descriptions.Item>
+					</Descriptions>
+				</Space>
+			</Content>
+		</Layout>
 	);
 }
 
