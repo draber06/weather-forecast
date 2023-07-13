@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetWeatherForecastsQuery } from "./app/services/yandex-weather";
+import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
 import {
 	addLocation,
@@ -16,9 +16,10 @@ const options: PositionOptions = {
 
 function App() {
 	const dispatch = useAppDispatch();
+
 	const activeLocation = useTypedSelector(selectActiveLocation);
-	const { data } = useGetWeatherForecastsQuery(
-		{ lat: activeLocation?.latitude, lon: activeLocation?.longitude },
+	const { data } = useGetWeatherForecastQuery(
+		{ lat: activeLocation?.latitude ?? 0, lon: activeLocation?.longitude ?? 0 },
 		{ skip: !activeLocation }
 	);
 

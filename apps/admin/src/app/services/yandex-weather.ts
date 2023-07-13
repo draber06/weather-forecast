@@ -8,7 +8,7 @@ export const api = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl }),
 	// tagTypes: ["Weather Forecast"],
 	endpoints: (build) => ({
-		getWeatherForecasts: build.query<Weather, { lat: number; lon: number }>({
+		getWeatherForecast: build.query<Weather, { lat: number; lon: number }>({
 			query: (pos) => ({
 				url: "/forecast",
 				params: pos,
@@ -26,4 +26,4 @@ export const api = createApi({
 	}),
 });
 
-export const { useGetWeatherForecastsQuery } = api;
+export const { useGetWeatherForecastQuery } = api;
