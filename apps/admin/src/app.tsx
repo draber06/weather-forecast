@@ -8,12 +8,29 @@ import {
 	setLocationError,
 } from "./locations-slice";
 import { List, Typography } from "antd";
+import { Fact } from "types";
+import l from "./ru.json";
 
 const options: PositionOptions = {
 	enableHighAccuracy: true,
 	timeout: 5000,
 	maximumAge: 0,
 };
+
+/**
+	Отображается информация по текущему месту и погоде
+	[x] - Широта и долгота - lon + lat
+	[x] - Название местности - weather.get
+	[x] - Местное время
+	[x] - Температура
+	[x] - Температура (ощущается)
+	[x] - Описание (солнечно, ветрено и т.д.)
+	[x] - Скорость ветра
+	[x] - Атмосферное давление
+	[x] - Влажность
+
+	[] - создать карточку с погодой
+*/
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -53,34 +70,56 @@ function App() {
 	}, []);
 
 	if (!weather) return;
-	/**
-		Отображается информация по текущему месту и погоде
-		[x] - Широта и долгота - lon + lat
-		[x] - Название местности - weather.get
-		[x] - Местное время
-		[x] - Температура
-		[x] - Температура (ощущается)
-		[] - Описание (солнечно, ветрено и т.д.)
-		[] - Скорость ветра
-		[] - Атмосферное давление
-		[] - Влажность
-	 */
 
-	const res = {
-		longitude: activeLocation?.longitude,
-		latitude: activeLocation?.latitude,
-		locationName: weather.geo_object.district.name + ", " + weather.geo_object.locality.name,
-		now: new Date(weather.now_dt).toLocaleTimeString(),
-		temp: weather.fact.temp,
-		feelsLike: weather.fact.feels_like,
-		condition: weather.fact.condition,
-	};
+	const dataSource = [
+		{
+			title: "Долгота",
+			description: activeLocation?.longitude,
+		},
+		{
+			title: "Широта",
+			description: activeLocation?.latitude,
+		},
+		{
+			title: "Название местности",
+			description: weather.geo_object.district.name + ", " + weather.geo_object.locality.name,
+		},
+		{
+			title: "Местное время",
+			description: new Date(weather.now_dt).toLocaleTimeString(),
+		},
+		{
+			title: "Температура",
+			description: weather.fact.temp,
+		},
+		{
+			title: "Температура (ощущается)",
+			description: weather.fact.feels_like,
+		},
+		{
+			title: "Описание",
+			// TODO add translation system?
+			description: (l as { [key: string]: any })[weather.fact.condition],
+		},
+		{
+			title: "Скорость ветра",
+			description: weather.fact.wind_speed,
+		},
+		{
+			title: "Атмосферное давление",
+			description: weather.fact.pressure_mm,
+		},
+		{
+			title: "Влажность",
+			description: weather.fact.humidity,
+		},
+	];
 
 	return (
 		<div>
 			<List
 				bordered
-				dataSource={Object.entries(res).map(([k, v]) => ({ title: k, description: v }))}
+				dataSource={dataSource}
 				renderItem={(item) => (
 					<List.Item>
 						<Typography.Text strong>{item.title}</Typography.Text> {item.description}
