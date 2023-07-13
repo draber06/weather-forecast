@@ -13,6 +13,7 @@ export const api = createApi({
 				url: "/forecast",
 				params: pos,
 			}),
+			transformResponse: (response: { data: Weather }) => response.data,
 			// providesTags: result => {
 			// 	console.log("-----", "result", result);
 			// 	return result

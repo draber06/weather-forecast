@@ -7,6 +7,7 @@ import {
 	selectLocations,
 	setLocationError,
 } from "./locations-slice";
+import { List, Typography } from "antd";
 
 const options: PositionOptions = {
 	enableHighAccuracy: true,
@@ -18,7 +19,7 @@ function App() {
 	const dispatch = useAppDispatch();
 
 	const activeLocation = useTypedSelector(selectActiveLocation);
-	const { data } = useGetWeatherForecastQuery(
+	const { data: weather } = useGetWeatherForecastQuery(
 		{ lat: activeLocation?.latitude ?? 0, lon: activeLocation?.longitude ?? 0 },
 		{ skip: !activeLocation }
 	);
@@ -51,10 +52,45 @@ function App() {
 		}
 	}, []);
 
-	console.log("-----", "activeLocation", activeLocation);
-	console.log(`-----data = `, JSON.stringify(data, null, 4));
+	if (!weather) return;
+	/**
+		Отображается информация по текущему месту и погоде
+		[x] - Широта и долгота - lon + lat
+		[x] - Название местности - weather.get
+		[x] - Местное время
+		[x] - Температура
+		[x] - Температура (ощущается)
+		[] - Описание (солнечно, ветрено и т.д.)
+		[] - Скорость ветра
+		[] - Атмосферное давление
+		[] - Влажность
+	 */
 
-	return <div>Hello</div>;
+	const res = {
+		longitude: activeLocation?.longitude,
+		latitude: activeLocation?.latitude,
+		locationName: weather.geo_object.district.name + ", " + weather.geo_object.locality.name,
+		now: new Date(weather.now_dt).toLocaleTimeString(),
+		temp: weather.fact.temp,
+		feelsLike: weather.fact.feels_like,
+		condition: weather.fact.condition,
+	};
+
+	return (
+		<div>
+			<List
+				bordered
+				dataSource={Object.entries(res).map(([k, v]) => ({ title: k, description: v }))}
+				renderItem={(item) => (
+					<List.Item>
+						<Typography.Text strong>{item.title}</Typography.Text> {item.description}
+					</List.Item>
+				)}
+			/>
+			<br />
+			{JSON.stringify(activeLocation, null, 4)}
+		</div>
+	);
 }
 
 export default App;
