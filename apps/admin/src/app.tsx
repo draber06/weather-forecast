@@ -1,18 +1,12 @@
 import React from "react";
 import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
-import {
-	addLocation,
-	selectActiveLocation,
-	selectLocations,
-	setLocationError,
-} from "./locations-slice";
-import { Layout, Space, Typography, Image, Divider, Segmented } from "antd";
-import { Fact } from "types";
+import { addLocation, selectActiveLocation, setLocationError } from "./locations-slice";
+import { Layout, Space, Typography, Divider } from "antd";
 import l from "./ru.json";
 import { WeatherNowInfo } from "./weather-now-info";
 import { WeatherNowDescription } from "./weather-now-description";
-import { capitalizeFirstLetter, getIconUrl } from "./utils";
+import { capitalizeFirstLetter } from "./utils";
 import { Forecasts } from "./forecasts";
 
 const { Content } = Layout;
@@ -63,19 +57,8 @@ function App() {
 
 	if (!weather) return;
 
-	const dataSource = [
-		{
-			title: "Долгота",
-			description: activeLocation?.longitude,
-		},
-		{
-			title: "Широта",
-			description: activeLocation?.latitude,
-		},
-	];
-
 	const currentLocation = capitalizeFirstLetter(weather.geo_object.district.name);
-	", " + weather.geo_object.locality.name;
+	`, ${weather.geo_object.locality.name}`;
 
 	return (
 		<Layout style={{ minHeight: "100vh" }}>

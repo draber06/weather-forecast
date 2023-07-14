@@ -1,9 +1,25 @@
+/* eslint-env node */
 module.exports = {
 	root: true,
-	extends: ["turbo", "prettier"],
+	env: {
+		browser: true,
+		es2020: true,
+	},
+	extends: [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react-hooks/recommended",
+		"turbo",
+		"prettier",
+	],
+	parser: "@typescript-eslint/parser",
 	settings: {
 		react: {
 			version: "detect",
 		},
+	},
+	parserOptions: {
+		ecmaVersion: "latest",
+		sourceType: "module",
 	},
 };
