@@ -29,7 +29,7 @@ function App() {
 	const activeLocation = useTypedSelector(selectActiveLocation);
 	const { data: weather } = useGetWeatherForecastQuery(
 		{ lat: activeLocation?.latitude ?? 0, lon: activeLocation?.longitude ?? 0 },
-		{ skip: !activeLocation }
+		{ skip: !activeLocation },
 	);
 
 	React.useEffect(() => {
@@ -44,10 +44,10 @@ function App() {
 									addLocation({
 										latitude: pos.coords.latitude,
 										longitude: pos.coords.longitude,
-									})
+									}),
 								),
 							(err) => dispatch(setLocationError(err)),
-							options
+							options,
 						);
 						break;
 					case "denied":

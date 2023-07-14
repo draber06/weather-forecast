@@ -2,3 +2,6 @@ arrowParens: always
 tabWidth: 4
 useTabs: true
 printWidth: 100
+trailingComma: all
+semi: true
+singleQuote: false
