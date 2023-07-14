@@ -15,6 +15,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 				theme={{
 					token: {
 						colorBgLayout: "white",
+						fontSizeHeading1: 28,
+						fontSizeHeading2: 20,
+						fontSizeHeading3: 16,
 					},
 				}}
 			>

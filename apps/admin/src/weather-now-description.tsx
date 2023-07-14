@@ -3,12 +3,7 @@ import { Weather } from "types";
 
 export const WeatherNowDescription = ({ weather }: { weather: Weather }) => {
 	return (
-		<Descriptions
-			column={1}
-			size="small"
-			contentStyle={{ fontSize: 13 }}
-			labelStyle={{ fontSize: 13 }}
-		>
+		<Descriptions column={1} size="small">
 			<Descriptions.Item label="Ощущается" style={{ padding: 0 }}>
 				+{weather.fact.feels_like}&deg;
 			</Descriptions.Item>

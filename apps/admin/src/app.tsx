@@ -7,11 +7,23 @@ import {
 	selectLocations,
 	setLocationError,
 } from "./locations-slice";
-import { Card, Col, Descriptions, Layout, List, Row, Space, Typography, Image } from "antd";
+import {
+	Card,
+	Col,
+	Descriptions,
+	Layout,
+	List,
+	Row,
+	Space,
+	Typography,
+	Image,
+	Divider,
+} from "antd";
 import { Fact } from "types";
 import l from "./ru.json";
 import { WeatherNowInfo } from "./weather-now-info";
 import { WeatherNowDescription } from "./weather-now-description";
+import { capitalizeFirstLetter } from "./utils";
 
 const { Content } = Layout;
 
@@ -20,21 +32,6 @@ const options: PositionOptions = {
 	timeout: 5000,
 	maximumAge: 0,
 };
-
-/**
-	Отображается информация по текущему месту и погоде
-	[x] - Широта и долгота - lon + lat
-	[x] - Название местности - weather.get
-	[x] - Местное время
-	[x] - Температура
-	[x] - Температура (ощущается)
-	[x] - Описание (солнечно, ветрено и т.д.)
-	[x] - Скорость ветра
-	[x] - Атмосферное давление
-	[x] - Влажность
-
-	[] - создать карточку с погодой
-*/
 
 function App() {
 	const dispatch = useAppDispatch();
@@ -65,6 +62,7 @@ function App() {
 						break;
 					case "denied":
 						// TODO show button "Разрешить доступ к данным геопозиции"
+
 						console.log(res.state);
 				}
 			});
@@ -84,55 +82,34 @@ function App() {
 			title: "Широта",
 			description: activeLocation?.latitude,
 		},
-		{
-			title: "Название местности",
-			description: weather.geo_object.district.name + ", " + weather.geo_object.locality.name,
-		},
-		{
-			title: "Местное время",
-			description: new Date(weather.now_dt).toLocaleTimeString(),
-		},
-		{
-			title: "Температура",
-			description: weather.fact.temp,
-		},
-		{
-			title: "Температура (ощущается)",
-			description: weather.fact.feels_like,
-		},
-		{
-			title: "Описание",
-			// TODO add translation system?
-			description: (l.condition as { [key: string]: any })[weather.fact.condition],
-		},
-		{
-			title: "Скорость ветра",
-			description: weather.fact.wind_speed,
-		},
-		{
-			title: "Атмосферное давление",
-			description: weather.fact.pressure_mm,
-		},
-		{
-			title: "Влажность",
-			description: weather.fact.humidity,
-		},
 	];
 
-	const title =
-		weather.geo_object.district.name[0].toUpperCase() +
-		weather.geo_object.district.name.slice(1) +
-		", " +
-		weather.geo_object.locality.name;
+	const currentLocation = capitalizeFirstLetter(weather.geo_object.district.name);
+	", " + weather.geo_object.locality.name;
 
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
 			<Content>
-				<Typography.Title style={{ fontSize: 24 }}>Погода в {title}</Typography.Title>
+				<Typography.Title>Погода в {currentLocation}</Typography.Title>
 
-				<Space align="start" size={14}>
-					<WeatherNowInfo weather={weather} />
-					<WeatherNowDescription weather={weather} />
+				<Space direction="vertical" size={15}>
+					<Space align="start" size={14}>
+						<WeatherNowInfo weather={weather} />
+						<WeatherNowDescription weather={weather} />
+					</Space>
+					<Divider style={{ margin: 0 }} />
+					<div>
+						<Typography.Title level={2}>Прогноз погоды по дням </Typography.Title>
+						<Typography.Paragraph>
+							Сегодня {new Date().getDate()}{" "}
+							{new Date().toLocaleString("ru", { month: "long" })}, погода +
+							{weather.fact.temp}°C.{" "}
+							{capitalizeFirstLetter(l.condition[weather.fact.condition])}, ветер
+							{weather.fact.wind_speed} м/с. Атмосферное давление{" "}
+							{weather.fact.pressure_mm} мм рт. ст. Относительная влажность воздуха{" "}
+							{weather.fact.humidity}%.
+						</Typography.Paragraph>
+					</div>
 				</Space>
 			</Content>
 		</Layout>
