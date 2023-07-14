@@ -1,9 +1,10 @@
 {
-  "exclude": ["node_modules"],
-  "extends": "tsconfig/vite.json",
-  "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist"
-  },
-  "include": ["src"]
+	"exclude": ["node_modules"],
+	"extends": "tsconfig/vite.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist",
+		"jsx": "react-jsx"
+	},
+	"include": ["src"]
 }

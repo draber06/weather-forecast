@@ -7,9 +7,11 @@ import {
 	selectLocations,
 	setLocationError,
 } from "./locations-slice";
-import { Card, Col, Descriptions, Layout, List, Row, Space, Typography } from "antd";
+import { Card, Col, Descriptions, Layout, List, Row, Space, Typography, Image } from "antd";
 import { Fact } from "types";
 import l from "./ru.json";
+import { WeatherNowInfo } from "./weather-now-info";
+import { WeatherNowDescription } from "./weather-now-description";
 
 const { Content } = Layout;
 
@@ -128,25 +130,9 @@ function App() {
 			<Content>
 				<Typography.Title style={{ fontSize: 24 }}>Погода в {title}</Typography.Title>
 
-				<Space align="start">
-					<Card style={{ width: 240 }}>
-						<Typography.Text>Сейчас</Typography.Text>
-					</Card>
-
-					<Descriptions column={1} size="small">
-						<Descriptions.Item label="Ощущается">
-							+{weather.fact.feels_like}°
-						</Descriptions.Item>
-						<Descriptions.Item label="Скорость ветра">
-							{weather.fact.wind_speed} м/с
-						</Descriptions.Item>
-						<Descriptions.Item label="Давление">
-							{weather.fact.pressure_mm} мм рт. ст.{" "}
-						</Descriptions.Item>
-						<Descriptions.Item label="Влажность">
-							{weather.fact.humidity}%
-						</Descriptions.Item>
-					</Descriptions>
+				<Space align="start" size={14}>
+					<WeatherNowInfo weather={weather} />
+					<WeatherNowDescription weather={weather} />
 				</Space>
 			</Content>
 		</Layout>
