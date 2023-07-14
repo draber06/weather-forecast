@@ -7,23 +7,13 @@ import {
 	selectLocations,
 	setLocationError,
 } from "./locations-slice";
-import {
-	Card,
-	Col,
-	Descriptions,
-	Layout,
-	List,
-	Row,
-	Space,
-	Typography,
-	Image,
-	Divider,
-} from "antd";
+import { Layout, Space, Typography, Image, Divider, Segmented } from "antd";
 import { Fact } from "types";
 import l from "./ru.json";
 import { WeatherNowInfo } from "./weather-now-info";
 import { WeatherNowDescription } from "./weather-now-description";
-import { capitalizeFirstLetter } from "./utils";
+import { capitalizeFirstLetter, getIconUrl } from "./utils";
+import { Forecasts } from "./forecasts";
 
 const { Content } = Layout;
 
@@ -110,6 +100,7 @@ function App() {
 							{weather.fact.humidity}%.
 						</Typography.Paragraph>
 					</div>
+					<Forecasts forecasts={weather.forecasts} />
 				</Space>
 			</Content>
 		</Layout>

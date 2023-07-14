@@ -13,8 +13,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 		<Provider store={store}>
 			<ConfigProvider
 				theme={{
+					components: {
+						Layout: {
+							colorBgBody: "white",
+						},
+					},
 					token: {
-						colorBgLayout: "white",
 						fontSizeHeading1: 28,
 						fontSizeHeading2: 20,
 						fontSizeHeading3: 16,

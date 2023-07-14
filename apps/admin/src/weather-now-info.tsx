@@ -1,8 +1,7 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { Card, Space, Typography, Image } from "antd";
-import React from "react";
 import { Weather } from "types";
-import { formatCurrentTime } from "./utils";
+import { formatCurrentTime, getIconUrl } from "./utils";
 
 export const WeatherNowInfo = ({ weather }: { weather: Weather }) => {
 	return (
@@ -26,8 +25,9 @@ export const WeatherNowInfo = ({ weather }: { weather: Weather }) => {
 			<Space>
 				<Image
 					width={48}
-					src={`https://yastatic.net/weather/i/icons/funky/dark/${weather.fact.icon}.svg`}
+					src={getIconUrl(weather.fact.icon)}
 					style={{ marginTop: 2 }}
+					preview={false}
 				/>
 				<div>
 					<Typography.Text style={{ fontSize: 36 }}>

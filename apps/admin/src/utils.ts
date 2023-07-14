@@ -21,6 +21,14 @@ export const formatCurrentTime = (date: string): string => {
  */
 export const capitalizeFirstLetter = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
 
+/**
+ * Get an icon according to Yandex Weather guidelines (https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html#resp-format__fact)
+ * @param name
+ * @returns {string}
+ */
+export const getIconUrl = (name: string): string =>
+	`https://yastatic.net/weather/i/icons/funky/dark/${name}.svg`;
+
 // const pluralRules = new Intl.PluralRules("ru");
 
 // /**
