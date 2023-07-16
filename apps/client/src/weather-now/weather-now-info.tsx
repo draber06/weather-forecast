@@ -2,11 +2,9 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import { Card, Space, Typography, Image } from "antd";
 import { Weather } from "types";
 import { formatCurrentTime, formatTemperature, getIconUrl } from "../utils";
-import { useTranslate } from "../lib/useTranslate";
+import { t } from "../locale";
 
 export const WeatherNowInfo = ({ weather }: { weather: Weather }) => {
-	const t = useTranslate("condition");
-
 	const title = (
 		<Space align="center" size={10}>
 			<Typography.Text>Сейчас</Typography.Text>
@@ -39,7 +37,7 @@ export const WeatherNowInfo = ({ weather }: { weather: Weather }) => {
 			</Space>
 
 			<Typography.Paragraph type="secondary" style={{ margin: 0 }}>
-				{t(weather.fact.condition)}
+				{t(`WeatherCondition|${weather.fact.condition}`)}
 			</Typography.Paragraph>
 		</Card>
 	);

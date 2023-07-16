@@ -1,7 +1,7 @@
 import { theme, Typography } from "antd";
 import { ReactComponent as WindDirectionIcon } from "../assets/wind-direction.svg";
 import { WindDir } from "types";
-import { useTranslate } from "../lib/useTranslate";
+import { t } from "../locale";
 
 // Wind direction
 const mapper = {
@@ -18,7 +18,6 @@ const mapper = {
 
 export const WindDirection = ({ wind_dir }: { wind_dir: WindDir }) => {
 	const { token } = theme.useToken();
-	const t = useTranslate();
 
 	return (
 		<Typography.Text style={{ fontSize: token.fontSizeSM }} type="secondary">
@@ -30,7 +29,9 @@ export const WindDirection = ({ wind_dir }: { wind_dir: WindDir }) => {
 					transform: `rotate(${mapper[wind_dir]}deg)`,
 				}}
 			/>
-			{wind_dir !== "c" && <span style={{ lineHeight: 1 }}>{t(`wind_dir.${wind_dir}`)}</span>}
+			{wind_dir !== "c" && (
+				<span style={{ lineHeight: 1 }}>{t(`WindDirection|${wind_dir}`)}</span>
+			)}
 		</Typography.Text>
 	);
 };
