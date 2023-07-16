@@ -1,0 +1,7 @@
+.ant-table-wrapper .ant-table-thead >tr>th,
+.ant-table-wrapper .ant-table-thead >tr>td {
+    font-size: 12px;
+    font-weight: normal;
+    color: rgba(133,136,158,1);
+    background: white;
+}

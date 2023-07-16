@@ -70,21 +70,7 @@ function App() {
 						<WeatherNowDescription weather={weather} />
 					</Space>
 					<Divider style={{ margin: 0 }} />
-					<div>
-						<Typography.Title level={2}>Прогноз погоды по дням </Typography.Title>
-						<Typography.Paragraph>
-							Сегодня {new Date().getDate()}{" "}
-							{new Date().toLocaleString("ru", { month: "long" })}, погода +
-							{weather.fact.temp}°C.{" "}
-							<span className="capitalize">
-								{l.condition[weather.fact.condition]}
-							</span>
-							, ветер
-							{weather.fact.wind_speed} м/с. Атмосферное давление{" "}
-							{weather.fact.pressure_mm} мм рт. ст. Относительная влажность воздуха{" "}
-							{weather.fact.humidity}%.
-						</Typography.Paragraph>
-					</div>
+
 					<Forecasts forecasts={weather.forecasts} />
 				</Space>
 			</Content>

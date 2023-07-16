@@ -5,6 +5,8 @@ import { Day, Forecast } from "types";
 import type { ColumnsType } from "antd/es/table";
 import { WindDirection } from "./wind-direction";
 
+import "./forecast-details.css";
+
 type ForecastColumn = Day & { time_of_day: string };
 
 const columns: ColumnsType<ForecastColumn> = [
@@ -33,8 +35,15 @@ const columns: ColumnsType<ForecastColumn> = [
 		title: "Атмосферные явления",
 		render: (name, record) => {
 			return (
-				<div>
-					<img alt="" src={getIconUrl(name)} width={36} style={{ marginRight: 3 }} />
+				<div
+					style={{
+						display: "flex",
+						flexWrap: "nowrap",
+						alignItems: "center",
+						lineHeight: 1,
+					}}
+				>
+					<img alt="" src={getIconUrl(name)} width={36} style={{ marginRight: 5 }} />
 					{l.condition[record.condition]}
 				</div>
 			);
@@ -42,7 +51,7 @@ const columns: ColumnsType<ForecastColumn> = [
 	},
 	{
 		dataIndex: "temp_avg",
-		title: "Ср. температура",
+		title: "Ср. темп.",
 		render: (_, record) => formatTemperature(record.temp_avg),
 	},
 	{

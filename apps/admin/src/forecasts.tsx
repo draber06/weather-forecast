@@ -69,6 +69,7 @@ export const Forecasts = ({ forecasts }: { forecasts: Forecast[] }) => {
 
 	return (
 		<Space direction="vertical" size={8} style={{ width: "100%" }}>
+			<Typography.Title level={2}>Прогноз погоды по дням </Typography.Title>
 			<Segmented block value={value} onChange={setValue} options={options} />
 			{activeForecast && <ForecastDetails forecast={activeForecast} />}
 		</Space>

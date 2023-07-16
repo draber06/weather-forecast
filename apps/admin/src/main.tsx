@@ -17,6 +17,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 						Layout: {
 							colorBgBody: "white",
 						},
+						Typography: {
+							// colorText: "rgba(38,38,51,1)",
+							// colorTextSecondary: "rgba(133,136,158,1)",
+							// colorFillSecondary: "rgba(133,136,158,1)",
+						},
 					},
 					token: {
 						fontSizeHeading1: 28,
@@ -24,6 +29,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 						fontSizeHeading3: 16,
 						fontSizeSM: 13,
 						fontSizeXL: 18,
+						colorText: "rgba(38,38,51,1)",
+						colorTextSecondary: "rgba(133,136,158,1)",
 					},
 				}}
 			>
