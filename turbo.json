@@ -4,7 +4,7 @@
 	"globalEnv": ["PORT"],
 	"pipeline": {
 		"build": {
-			"outputs": ["dist/**", "build/**", "api/**", "public/build/**"],
+			"outputs": ["dist/**", "build/**", "server/**", "public/build/**"],
 			"dependsOn": ["^build"]
 		},
 		"lint": {

@@ -7,6 +7,7 @@ import { WeatherNowDescription } from "./weather-now/weather-now-description";
 import { Forecasts } from "./forecast-details/forecasts";
 import { useEffect } from "react";
 import { ReactComponent as WeatherLogoIcon } from "./assets/logo_weather_ru_indoor.svg";
+import { Locations } from "./locations";
 
 const { Content } = Layout;
 
@@ -65,7 +66,9 @@ export const App = () => {
 				</a>
 			</Layout.Header>
 			<Layout hasSider>
-				<Layout.Sider style={{ background: token.colorBgContainer }}>Hello</Layout.Sider>
+				<Layout.Sider style={{ overflow: "hidden", padding: "16px 8px" }} width={320}>
+					<Locations />
+				</Layout.Sider>
 				<Layout style={{ padding: "16px 24px 24px" }}>
 					<Typography.Title>
 						Погода в{" "}
