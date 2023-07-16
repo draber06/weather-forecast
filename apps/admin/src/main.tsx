@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { ConfigProvider } from "antd";
 import { store } from "./app/store";
-import App from "./app";
+import { App } from "./app";
 
 import "antd/dist/reset.css";
 import "./main.css";

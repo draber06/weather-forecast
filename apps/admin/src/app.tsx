@@ -2,11 +2,11 @@ import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
 import { addLocation, selectActiveLocation, setLocationError } from "./locations-slice";
 import { Layout, Space, Typography, Divider } from "antd";
-import l from "./ru.json";
 import { WeatherNowInfo } from "./weather-now-info";
 import { WeatherNowDescription } from "./weather-now-description";
 import { Forecasts } from "./forecasts";
 import { useEffect } from "react";
+import { ReactComponent as WeatherLogoIcon } from "./assets/logo_weather_ru_indoor.svg";
 
 const { Content } = Layout;
 
@@ -16,7 +16,7 @@ const options: PositionOptions = {
 	maximumAge: 0,
 };
 
-function App() {
+export const App = () => {
 	const dispatch = useAppDispatch();
 
 	const activeLocation = useTypedSelector(selectActiveLocation);
@@ -59,6 +59,10 @@ function App() {
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
 			<Content style={{ maxWidth: 960, margin: "auto", padding: "16px 24px" }}>
+				<a href="https://yandex.ru/pogoda/">
+					<WeatherLogoIcon />
+				</a>
+				<Divider />
 				<Typography.Title>
 					Погода в <span className="capitalize">{weather.geo_object.district.name}</span>,{" "}
 					{weather.geo_object.locality.name}
@@ -76,6 +80,4 @@ function App() {
 			</Content>
 		</Layout>
 	);
-}
-
-export default App;
+};
