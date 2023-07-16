@@ -262,6 +262,8 @@ export interface Morning {
 	fresh_snow_mm: number;
 }
 
+export type WindDir = "nw" | "n" | "ne" | "e" | "se" | "s" | "sw" | "w" | "c";
+
 export interface Day {
 	_source: string;
 	temp_min: number;
@@ -269,7 +271,7 @@ export interface Day {
 	temp_max: number;
 	wind_speed: number;
 	wind_gust: number;
-	wind_dir: string;
+	wind_dir: WindDir;
 	pressure_mm: number;
 	pressure_pa: number;
 	humidity: number;

@@ -1,21 +1,9 @@
-import { Space, Table, theme, Typography } from "antd";
+import { Space, Table, Typography } from "antd";
 import { formatTemperature, getIconUrl } from "./utils";
 import l from "./ru.json";
 import { Day, Forecast } from "types";
-import { ReactComponent as WindDirectionIcon } from "./assets/wind-direction.svg";
-
-import React from "react";
 import type { ColumnsType } from "antd/es/table";
-
-const WindDirection = ({ wind_dir }: { wind_dir: string }) => {
-	const { token } = theme.useToken();
-	return (
-		<Typography.Text style={{ fontSize: token.fontSizeSM }} type="secondary">
-			<WindDirectionIcon style={{ position: "relative", top: 3 }} />
-			<span style={{ marginRight: 3, lineHeight: 1 }}>{l.wind_dir[wind_dir]}</span>
-		</Typography.Text>
-	);
-};
+import { WindDirection } from "./wind-direction";
 
 type ForecastColumn = Day & { time_of_day: string };
 
@@ -42,6 +30,7 @@ const columns: ColumnsType<ForecastColumn> = [
 	},
 	{
 		dataIndex: "icon",
+		title: "Атмосферные явления",
 		render: (name, record) => {
 			return (
 				<div>
@@ -50,6 +39,11 @@ const columns: ColumnsType<ForecastColumn> = [
 				</div>
 			);
 		},
+	},
+	{
+		dataIndex: "temp_avg",
+		title: "Ср. температура",
+		render: (_, record) => formatTemperature(record.temp_avg),
 	},
 	{
 		title: "Давление мм рт. ст.",
