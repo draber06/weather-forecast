@@ -18,7 +18,7 @@ const initialState = adapter.getInitialState<{
 
 export const sliceKey = "geo-positions";
 
-const slice = createSlice({
+const locationsSlice = createSlice({
 	name: sliceKey,
 	initialState,
 	reducers: {
@@ -43,9 +43,9 @@ const slice = createSlice({
 	},
 });
 
-export const { addLocation, removeLocation, setLocationError } = slice.actions;
+export const { addLocation, removeLocation, setLocationError } = locationsSlice.actions;
 
-export default slice.reducer;
+export default locationsSlice.reducer;
 
 export const { selectAll: selectLocations, selectById } = adapter.getSelectors<RootState>(
 	(state) => state[sliceKey],

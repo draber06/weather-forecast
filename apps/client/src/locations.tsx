@@ -1,56 +1,65 @@
 import { Button, Form, Input, Menu, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useTypedSelector } from "./app/store";
-import { selectLocations, UserLocation } from "./app/locations-slice";
-import { useState } from "react";
+import { useAppDispatch, useTypedSelector } from "./app/store";
+import { addLocation, selectLocations, UserLocation } from "./app/locations-slice";
+import { useModal } from "./app/use-modal";
 
-const AddLocationForm = () => {
+const AddLocationModal = () => {
+	const dispatch = useAppDispatch();
+	const { isOpened, ok, cancel } = useModal();
 	const [form] = Form.useForm<UserLocation>();
 
-	const onFinish = (values: any) => {
-		console.log("Success:", values);
-	};
-
-	const onFinishFailed = (errorInfo: any) => {
-		console.log("Failed:", errorInfo);
+	const onOk = async () => {
+		// TODO does it make sense to check if location unique or replacing it is good enough?
+		try {
+			const values = await form.validateFields();
+			console.log("-----", "values", values);
+			form.resetFields();
+			dispatch(addLocation(values));
+			ok();
+		} catch (error) {
+			console.log("Validate Failed:", error);
+		}
 	};
 	return (
-		<Form
-			form={form}
-			name="add-location"
-			initialValues={{ longitude: null, latitude: null }}
-			onFinish={onFinish}
-			onFinishFailed={onFinishFailed}
-			layout="vertical"
-			autoComplete="off"
+		<Modal
+			title="Добавить локацию"
+			centered
+			open={isOpened}
+			onOk={onOk}
+			onCancel={cancel}
+			okText="Ок"
+			cancelText="Отмена"
 		>
-			<Form.Item
-				label="Широта"
-				name="latitude"
-				rules={[{ required: true, message: "Пожалуйста введите широту" }]}
+			<Form
+				form={form}
+				name="add-location"
+				initialValues={{ longitude: null, latitude: null }}
+				layout="vertical"
 			>
-				<Input type="number" />
-			</Form.Item>
+				<Form.Item
+					label="Широта"
+					name="latitude"
+					rules={[{ required: true, message: "Пожалуйста введите широту" }]}
+				>
+					<Input type="number" />
+				</Form.Item>
 
-			<Form.Item
-				label="Долгота"
-				name="longitude"
-				rules={[{ required: true, message: "Пожалуйста введите долготу!" }]}
-			>
-				<Input type="number" />
-			</Form.Item>
-
-			<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-				<Button type="default" icon={<PlusOutlined />} htmlType="submit">
-					Добавить локацию
-				</Button>
-			</Form.Item>
-		</Form>
+				<Form.Item
+					label="Долгота"
+					name="longitude"
+					rules={[{ required: true, message: "Пожалуйста введите долготу!" }]}
+				>
+					<Input type="number" />
+				</Form.Item>
+			</Form>
+		</Modal>
 	);
 };
 
 export const Locations = () => {
-	const [modalOpen, setModalOpen] = useState(false);
+	const { open } = useModal();
+
 	const locations = useTypedSelector(selectLocations);
 
 	const menuItems = locations.map((l) => ({
@@ -62,21 +71,11 @@ export const Locations = () => {
 		<div>
 			<Menu onClick={(e) => console.log(e)} mode="vertical" items={menuItems} theme="dark" />
 			<div className="flex justify-center" style={{ marginTop: 24 }}>
-				<Button type="default" icon={<PlusOutlined />} onClick={() => setModalOpen(true)}>
+				<Button type="default" icon={<PlusOutlined />} onClick={open}>
 					Добавить локацию
 				</Button>
 
-				<Modal
-					title="Добавить локацию"
-					centered
-					open={modalOpen}
-					onOk={() => setModalOpen(true)}
-					onCancel={() => setModalOpen(false)}
-					okText="Ок"
-					cancelText="Отмена"
-				>
-					<AddLocationForm />
-				</Modal>
+				<AddLocationModal />
 			</div>
 		</div>
 	);
