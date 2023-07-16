@@ -20,12 +20,13 @@
 	"devDependencies": {
 		"@types/react": "^18.2.14",
 		"@types/react-dom": "^18.2.6",
-		"@vitejs/plugin-react": "^4.0.3",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
+		"@vitejs/plugin-react": "^4.0.3",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"tsconfig": "*",
 		"types": "*",
-		"vite": "^4.4.2"
+		"vite": "^4.4.2",
+		"vite-plugin-svgr": "^3.2.0"
 	}
 }

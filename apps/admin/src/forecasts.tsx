@@ -1,10 +1,10 @@
-import { Card, Image, Segmented, Space, theme, Typography } from "antd";
+import { Segmented, Space, theme, Typography } from "antd";
 import { Forecast } from "types";
-import l from "./ru.json";
 import { formatTemperature, getIconUrl } from "./utils";
 import { useState } from "react";
 
 import "./forecasts.css";
+import { ForecastDetails } from "./forecast-details";
 
 const ForecastBriefly = ({ forecast }: { forecast: Forecast }) => {
 	const { token } = theme.useToken();
@@ -56,35 +56,6 @@ const ForecastBriefly = ({ forecast }: { forecast: Forecast }) => {
 	);
 };
 
-const ForecastDetails = ({ forecast }: { forecast: Forecast }) => {
-	const {
-		temp_avg,
-		temp_max,
-		temp_min,
-		wind_speed,
-		pressure_mm,
-		humidity,
-		feels_like,
-		condition,
-	} = forecast.parts.day;
-
-	return (
-		<Card>
-			<div>
-				<Image src={getIconUrl(forecast.parts.day_short.icon)} width={48} preview={false} />
-				<div>{temp_min}</div>
-				<div>{temp_max}</div>
-				<div>{temp_avg}</div>
-				<div>{feels_like}</div>
-				<div>{l.condition[condition]}</div>
-				<div>{wind_speed} м/с</div>
-				<div>{pressure_mm} мм. рт. ст.</div>
-				<div>{humidity}%</div>
-			</div>
-		</Card>
-	);
-};
-
 export const Forecasts = ({ forecasts }: { forecasts: Forecast[] }) => {
 	// TODO move to redux
 	const [value, setValue] = useState<string | number>(forecasts[0].date_ts);
@@ -97,10 +68,8 @@ export const Forecasts = ({ forecasts }: { forecasts: Forecast[] }) => {
 	}));
 
 	return (
-		<Space direction="vertical" size={0} style={{ width: "100%" }}>
-			{/*TODO switch to tabs?*/}
+		<Space direction="vertical" size={8} style={{ width: "100%" }}>
 			<Segmented block value={value} onChange={setValue} options={options} />
-
 			{activeForecast && <ForecastDetails forecast={activeForecast} />}
 		</Space>
 	);
