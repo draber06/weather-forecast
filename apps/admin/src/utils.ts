@@ -22,27 +22,6 @@ export const formatCurrentTime = (date: string): string => {
 export const getIconUrl = (name: string): string =>
 	`https://yastatic.net/weather/i/icons/funky/dark/${name}.svg`;
 
-// const pluralRules = new Intl.PluralRules("ru");
-
-// /**
-//  * Pluralization
-//  * @param count
-//  * @param singular
-//  * @param plural
-//  * @returns {string}
-//  */
-
-// export const pluralize = (count: number, singular: string, plural: string): string => {
-// 	const grammaticalNumber = pluralRules.select(count);
-// 	switch (grammaticalNumber) {
-// 		case "one":
-// 			return count + " " + singular;
-// 		case "other":
-// 			return count + " " + plural;
-// 		default:
-// 			throw new Error("Unknown: " + grammaticalNumber);
-// 	}
-// };
 /**
  * Add sign to temperature if needed
  * @example

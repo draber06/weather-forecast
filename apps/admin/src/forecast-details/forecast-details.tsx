@@ -1,11 +1,12 @@
 import { Space, Table, Typography } from "antd";
 import { formatTemperature, getIconUrl } from "../utils";
-import l from "../ru.json";
 import { Day, Forecast } from "types";
 import type { ColumnsType } from "antd/es/table";
-import { WindDirection } from "../wind-direction";
+import { WindDirection } from "../components/wind-direction";
 
 import "./forecast-details.css";
+import { useTranslate } from "../lib/useTranslate";
+import { Trans } from "../lib/trans";
 
 type ForecastColumn = Day & { time_of_day: string };
 
@@ -44,7 +45,7 @@ const columns: ColumnsType<ForecastColumn> = [
 					}}
 				>
 					<img alt="" src={getIconUrl(name)} width={36} style={{ marginRight: 5 }} />
-					{l.condition[record.condition]}
+					<Trans key={`condition.${record.condition}`} />
 				</div>
 			);
 		},
@@ -83,6 +84,8 @@ const columns: ColumnsType<ForecastColumn> = [
 ];
 
 export const ForecastDetails = ({ forecast }: { forecast: Forecast }) => {
+	const t = useTranslate("time_of_day");
+
 	const parts = (({ morning, day, night, evening }) => ({
 		morning,
 		day,
@@ -92,7 +95,7 @@ export const ForecastDetails = ({ forecast }: { forecast: Forecast }) => {
 
 	const dataSource = Object.entries(parts).map(([k, v]) => ({
 		...v,
-		time_of_day: (l.time_of_day as Record<string, string>)[k],
+		time_of_day: t(k),
 	})) as ForecastColumn[];
 
 	return (
