@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 				theme={{
 					components: {
 						Layout: {
-							colorBgBody: "white",
+							// colorBgBody: "white",
 						},
 						Typography: {
 							// colorText: "rgba(38,38,51,1)",

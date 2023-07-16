@@ -1,7 +1,7 @@
 import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
 import { addLocation, selectActiveLocation, setLocationError } from "./app/locations-slice";
-import { Layout, Space, Typography, Divider } from "antd";
+import { Layout, Space, Typography, Divider, theme } from "antd";
 import { WeatherNowInfo } from "./weather-now/weather-now-info";
 import { WeatherNowDescription } from "./weather-now/weather-now-description";
 import { Forecasts } from "./forecast-details/forecasts";
@@ -18,6 +18,7 @@ const options: PositionOptions = {
 
 export const App = () => {
 	const dispatch = useAppDispatch();
+	const { token } = theme.useToken();
 
 	const activeLocation = useTypedSelector(selectActiveLocation);
 	const { data: weather } = useGetWeatherForecastQuery(
@@ -57,27 +58,33 @@ export const App = () => {
 	if (!weather) return;
 
 	return (
-		<Layout style={{ minHeight: "100vh" }}>
-			<Content style={{ maxWidth: 960, margin: "auto", padding: "16px 24px" }}>
+		<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh" }}>
+			<Layout.Header>
 				<a href="https://yandex.ru/pogoda/">
-					<WeatherLogoIcon />
+					<WeatherLogoIcon style={{ verticalAlign: "middle" }} />
 				</a>
-				<Divider />
-				<Typography.Title>
-					Погода в <span className="capitalize">{weather.geo_object.district.name}</span>,{" "}
-					{weather.geo_object.locality.name}
-				</Typography.Title>
+			</Layout.Header>
+			<Layout hasSider>
+				<Layout.Sider style={{ background: token.colorBgContainer }}>Hello</Layout.Sider>
+				<Layout style={{ padding: "16px 24px 24px" }}>
+					<Typography.Title>
+						Погода в{" "}
+						<span className="capitalize">{weather.geo_object.district.name}</span>,{" "}
+						{weather.geo_object.locality.name}
+					</Typography.Title>
+					<Content style={{ padding: 24, background: token.colorBgContainer }}>
+						<Space direction="vertical" size={15}>
+							<Space align="start" size={14}>
+								<WeatherNowInfo weather={weather} />
+								<WeatherNowDescription weather={weather} />
+							</Space>
+							<Divider style={{ margin: 0 }} />
 
-				<Space direction="vertical" size={15}>
-					<Space align="start" size={14}>
-						<WeatherNowInfo weather={weather} />
-						<WeatherNowDescription weather={weather} />
-					</Space>
-					<Divider style={{ margin: 0 }} />
-
-					<Forecasts forecasts={weather.forecasts} />
-				</Space>
-			</Content>
+							<Forecasts forecasts={weather.forecasts} />
+						</Space>
+					</Content>
+				</Layout>
+			</Layout>
 		</Layout>
 	);
 };
