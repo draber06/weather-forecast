@@ -22,7 +22,7 @@ const locationsSlice = createSlice({
 	name: sliceKey,
 	initialState,
 	reducers: {
-		selectLocation(state, { payload }: PayloadAction<{ id: number }>) {
+		setActiveLocation(state, { payload }: PayloadAction<{ id: number }>) {
 			state.activeLocation = payload.id;
 		},
 		addLocation(state, action: PayloadAction<UserLocation>) {
@@ -43,20 +43,14 @@ const locationsSlice = createSlice({
 	},
 });
 
-export const { addLocation, removeLocation, setLocationError } = locationsSlice.actions;
+export const { addLocation, removeLocation, setLocationError, setActiveLocation } =
+	locationsSlice.actions;
 
 export default locationsSlice.reducer;
 
-export const { selectAll: selectLocations, selectById } = adapter.getSelectors<RootState>(
+export const { selectAll: selectLocations } = adapter.getSelectors<RootState>(
 	(state) => state[sliceKey],
 );
-
-// export const selectLocations = createSelector([selectEntities], (geoPositions) => {
-// 	map(geoPositions, (v, k) => ({
-// 		key: k,
-// 		label: `Широта: ${v?.latitude}, Долгота: ${v?.longitude}`,
-// 	}));
-// });
 
 export const selectActiveLocation = createSelector([(state) => state[sliceKey]], (state) => {
 	return state.activeLocation === null ? null : state.entities[state.activeLocation];

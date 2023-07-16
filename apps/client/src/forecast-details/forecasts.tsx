@@ -1,7 +1,6 @@
-import { Segmented, Space, theme, Typography } from "antd";
+import { Space, Tabs, theme, Typography } from "antd";
 import { Forecast } from "types";
 import { formatTemperature, getIconUrl } from "../utils";
-import { useState } from "react";
 
 import "./forecasts.css";
 import { ForecastDetails } from "./forecast-details";
@@ -57,21 +56,16 @@ const ForecastBriefly = ({ forecast }: { forecast: Forecast }) => {
 };
 
 export const Forecasts = ({ forecasts }: { forecasts: Forecast[] }) => {
-	// TODO move to redux
-	const [value, setValue] = useState<string | number>(forecasts[0].date_ts);
-
-	const activeForecast = forecasts.find((f) => f.date_ts === value);
-
-	const options = forecasts.map((forecast) => ({
+	const items = forecasts.map((forecast) => ({
 		label: <ForecastBriefly forecast={forecast} />,
-		value: forecast.date_ts,
+		key: String(forecast.date_ts),
+		children: <ForecastDetails forecast={forecast} />,
 	}));
 
 	return (
 		<Space direction="vertical" size={8} style={{ width: "100%" }}>
 			<Typography.Title level={2}>Прогноз погоды по дням </Typography.Title>
-			<Segmented block value={value} onChange={setValue} options={options} />
-			{activeForecast && <ForecastDetails forecast={activeForecast} />}
+			<Tabs defaultActiveKey={String(forecasts[0].date_ts)} items={items} />
 		</Space>
 	);
 };

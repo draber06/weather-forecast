@@ -1,10 +1,9 @@
-import { Button, Form, Input, Menu, Modal } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { useAppDispatch, useTypedSelector } from "./app/store";
-import { addLocation, selectLocations, UserLocation } from "./app/locations-slice";
-import { useModal } from "./app/use-modal";
+import { useAppDispatch } from "../app/store";
+import { useModal } from "../app/use-modal";
+import { Form, Input, Modal } from "antd";
+import { addLocation, UserLocation } from "../app/locations-slice";
 
-const AddLocationModal = () => {
+export const AddLocationModal = () => {
 	const dispatch = useAppDispatch();
 	const { isOpened, ok, cancel } = useModal();
 	const [form] = Form.useForm<UserLocation>();
@@ -13,7 +12,6 @@ const AddLocationModal = () => {
 		// TODO does it make sense to check if location unique or replacing it is good enough?
 		try {
 			const values = await form.validateFields();
-			console.log("-----", "values", values);
 			form.resetFields();
 			dispatch(addLocation(values));
 			ok();
@@ -54,29 +52,5 @@ const AddLocationModal = () => {
 				</Form.Item>
 			</Form>
 		</Modal>
-	);
-};
-
-export const Locations = () => {
-	const { open } = useModal();
-
-	const locations = useTypedSelector(selectLocations);
-
-	const menuItems = locations.map((l) => ({
-		key: l.latitude + l.longitude,
-		label: `Широта ${l.latitude}, Долгота: ${l.longitude}`,
-	}));
-
-	return (
-		<div>
-			<Menu onClick={(e) => console.log(e)} mode="vertical" items={menuItems} theme="dark" />
-			<div className="flex justify-center" style={{ marginTop: 24 }}>
-				<Button type="default" icon={<PlusOutlined />} onClick={open}>
-					Добавить локацию
-				</Button>
-
-				<AddLocationModal />
-			</div>
-		</div>
 	);
 };

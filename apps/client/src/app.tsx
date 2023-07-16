@@ -6,8 +6,8 @@ import { WeatherNowInfo } from "./weather-now/weather-now-info";
 import { WeatherNowDescription } from "./weather-now/weather-now-description";
 import { Forecasts } from "./forecast-details/forecasts";
 import { useEffect } from "react";
-import { ReactComponent as WeatherLogoIcon } from "./assets/logo_weather_ru_indoor.svg";
-import { Locations } from "./locations";
+import { ReactComponent as LogoIcon } from "./assets/logo-white.svg";
+import { Locations } from "./locations/locations";
 
 const { Content } = Layout;
 
@@ -59,14 +59,18 @@ export const App = () => {
 	if (!weather) return;
 
 	return (
-		<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh" }}>
+		<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh", minWidth: 1200 }}>
 			<Layout.Header>
 				<a href="https://yandex.ru/pogoda/">
-					<WeatherLogoIcon style={{ verticalAlign: "middle" }} />
+					<LogoIcon style={{ verticalAlign: "middle" }} height={32} />
 				</a>
 			</Layout.Header>
 			<Layout hasSider>
-				<Layout.Sider style={{ overflow: "hidden", padding: "16px 8px" }} width={320}>
+				<Layout.Sider
+					style={{ overflow: "hidden", padding: "16px 8px" }}
+					width={320}
+					theme="light"
+				>
 					<Locations />
 				</Layout.Sider>
 				<Layout style={{ padding: "16px 24px 24px" }}>
