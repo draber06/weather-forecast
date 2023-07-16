@@ -1,10 +1,10 @@
 import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
-import { addLocation, selectActiveLocation, setLocationError } from "./locations-slice";
+import { addLocation, selectActiveLocation, setLocationError } from "./app/locations-slice";
 import { Layout, Space, Typography, Divider } from "antd";
-import { WeatherNowInfo } from "./weather-now-info";
-import { WeatherNowDescription } from "./weather-now-description";
-import { Forecasts } from "./forecasts";
+import { WeatherNowInfo } from "./weather-now/weather-now-info";
+import { WeatherNowDescription } from "./weather-now/weather-now-description";
+import { Forecasts } from "./forecast-details/forecasts";
 import { useEffect } from "react";
 import { ReactComponent as WeatherLogoIcon } from "./assets/logo_weather_ru_indoor.svg";
 

@@ -2,7 +2,7 @@ import { configureStore, ConfigureStoreOptions } from "@reduxjs/toolkit";
 // TODO delete react-redux bindings?
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { api } from "./services/yandex-weather";
-import locationsReducer from "../locations-slice";
+import locationsReducer from "./locations-slice";
 
 export const createStore = (options?: ConfigureStoreOptions["preloadedState"] | undefined) =>
 	configureStore({

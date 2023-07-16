@@ -1,6 +1,6 @@
 import { Segmented, Space, theme, Typography } from "antd";
 import { Forecast } from "types";
-import { formatTemperature, getIconUrl } from "./utils";
+import { formatTemperature, getIconUrl } from "../utils";
 import { useState } from "react";
 
 import "./forecasts.css";

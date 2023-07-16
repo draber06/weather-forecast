@@ -1,6 +1,6 @@
 import { Descriptions } from "antd";
 import { Weather } from "types";
-import { formatTemperature } from "./utils";
+import {formatTemperature} from "../utils";
 
 export const WeatherNowDescription = ({ weather }: { weather: Weather }) => {
 	return (

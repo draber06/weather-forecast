@@ -1,9 +1,9 @@
 import { Space, Table, Typography } from "antd";
-import { formatTemperature, getIconUrl } from "./utils";
-import l from "./ru.json";
+import { formatTemperature, getIconUrl } from "../utils";
+import l from "../ru.json";
 import { Day, Forecast } from "types";
 import type { ColumnsType } from "antd/es/table";
-import { WindDirection } from "./wind-direction";
+import { WindDirection } from "../wind-direction";
 
 import "./forecast-details.css";
 
