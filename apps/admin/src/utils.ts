@@ -15,13 +15,6 @@ export const formatCurrentTime = (date: string): string => {
 };
 
 /**
- * Capitalize first letter of the given string
- * @param s string to convert
- * @returns {string}
- */
-export const capitalizeFirstLetter = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
-
-/**
  * Get an icon according to Yandex Weather guidelines (https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html#resp-format__fact)
  * @param name
  * @returns {string}
@@ -50,3 +43,20 @@ export const getIconUrl = (name: string): string =>
 // 			throw new Error("Unknown: " + grammaticalNumber);
 // 	}
 // };
+/**
+ * Add sign to temperature if needed
+ * @example
+ * // returns +20°
+ * formatTemp(20)
+ *
+ * @example
+ * // returns -20°
+ * formatTemp(-20)
+ *
+ * @param {number}  t
+ * @returns {string}
+ */
+export const formatTemperature = (t: number): string => {
+	const formattedT = t > 0 ? "+" + t : t;
+	return formattedT + "°";
+};

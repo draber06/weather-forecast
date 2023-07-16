@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
 import { addLocation, selectActiveLocation, setLocationError } from "./locations-slice";
@@ -6,8 +5,8 @@ import { Layout, Space, Typography, Divider } from "antd";
 import l from "./ru.json";
 import { WeatherNowInfo } from "./weather-now-info";
 import { WeatherNowDescription } from "./weather-now-description";
-import { capitalizeFirstLetter } from "./utils";
 import { Forecasts } from "./forecasts";
+import { useEffect } from "react";
 
 const { Content } = Layout;
 
@@ -26,7 +25,7 @@ function App() {
 		{ skip: !activeLocation },
 	);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.permissions.query({ name: "geolocation" }).then((res) => {
 				switch (res.state) {
@@ -53,17 +52,17 @@ function App() {
 		} else {
 			console.log("Oops! It looks like Geolocation API is not supported by the browser.");
 		}
-	}, []);
+	}, [dispatch]);
 
 	if (!weather) return;
 
-	const currentLocation = capitalizeFirstLetter(weather.geo_object.district.name);
-	`, ${weather.geo_object.locality.name}`;
-
 	return (
 		<Layout style={{ minHeight: "100vh" }}>
-			<Content>
-				<Typography.Title>Погода в {currentLocation}</Typography.Title>
+			<Content style={{ maxWidth: 960, margin: "auto", padding: "16px 24px" }}>
+				<Typography.Title>
+					Погода в <span className="capitalize">{weather.geo_object.district.name}</span>,{" "}
+					{weather.geo_object.locality.name}
+				</Typography.Title>
 
 				<Space direction="vertical" size={15}>
 					<Space align="start" size={14}>
@@ -77,7 +76,10 @@ function App() {
 							Сегодня {new Date().getDate()}{" "}
 							{new Date().toLocaleString("ru", { month: "long" })}, погода +
 							{weather.fact.temp}°C.{" "}
-							{capitalizeFirstLetter(l.condition[weather.fact.condition])}, ветер
+							<span className="capitalize">
+								{l.condition[weather.fact.condition]}
+							</span>
+							, ветер
 							{weather.fact.wind_speed} м/с. Атмосферное давление{" "}
 							{weather.fact.pressure_mm} мм рт. ст. Относительная влажность воздуха{" "}
 							{weather.fact.humidity}%.
