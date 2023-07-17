@@ -1,6 +1,6 @@
 import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
-import { addLocation, selectActiveLocation, setLocationError } from "./app/locations-slice";
+import { addLocation, selectActiveLocation, setLocationError } from "./locations/locations-slice";
 import { Layout, Space, Typography, Divider, theme } from "antd";
 import { WeatherNowInfo } from "./weather-now/weather-now-info";
 import { WeatherNowDescription } from "./weather-now/weather-now-description";

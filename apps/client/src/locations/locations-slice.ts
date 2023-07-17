@@ -1,14 +1,16 @@
 import { PayloadAction, createSlice, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import { RootState } from "../app/store";
 
 // name is kinda strange because there are built-in types like GeoLocationPosition, Location, etc.
 export type UserLocation = {
+	id: string;
 	latitude: number;
 	longitude: number;
+	createdAt: number;
 };
 
 const adapter = createEntityAdapter<UserLocation>({
-	selectId: (position) => position.latitude + position.longitude,
+	sortComparer: (a, b) => a.createdAt - b.createdAt,
 });
 
 const initialState = adapter.getInitialState<{
@@ -25,16 +27,28 @@ const locationsSlice = createSlice({
 		setActiveLocation(state, { payload }: PayloadAction<{ id: string }>) {
 			state.activeLocation = payload.id;
 		},
-		addLocation(state, action: PayloadAction<UserLocation>) {
-			adapter.addOne(state, action);
-			if (!state.activeLocation) {
-				state.activeLocation = String(action.payload.latitude + action.payload.longitude);
-			}
+		addLocation: {
+			reducer: (state, action: PayloadAction<UserLocation>) => {
+				adapter.addOne(state, action);
+				if (!state.activeLocation) {
+					state.activeLocation = action.payload.id;
+				}
+			},
+			prepare: (payload: Pick<UserLocation, "latitude" | "longitude">) => {
+				return {
+					payload: {
+						id: String(payload.latitude + payload.longitude),
+						...payload,
+						createdAt: Date.now(),
+					},
+				};
+			},
 		},
 		removeLocation(state, { payload }: PayloadAction<{ id: string }>) {
 			adapter.removeOne(state, payload.id);
+			// TODO - it doesn't work at the moment
 			if (state.activeLocation === payload.id) {
-				state.activeLocation = null;
+				state.activeLocation = String(state.ids[0]);
 			}
 		},
 		setLocationError(state, { payload }: PayloadAction<GeolocationPositionError>) {

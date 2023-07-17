@@ -1,7 +1,7 @@
 import { configureStore, ConfigureStoreOptions } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { api } from "./services/yandex-weather";
-import locationsReducer, { sliceKey as LOCATIONS_SLICE_KEY } from "./locations-slice";
+import locationsReducer, { sliceKey as LOCATIONS_SLICE_KEY } from "../locations/locations-slice";
 import modalReducer, { sliceKey as MODAL_SLICE_KEY } from "./modal-slice";
 
 export const createStore = (options?: ConfigureStoreOptions["preloadedState"] | undefined) =>

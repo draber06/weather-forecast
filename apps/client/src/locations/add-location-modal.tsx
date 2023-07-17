@@ -1,7 +1,7 @@
 import { useAppDispatch } from "../app/store";
 import { useModal } from "../app/use-modal";
 import { Button, Col, Form, InputNumber, Modal, Row } from "antd";
-import { addLocation, UserLocation } from "../app/locations-slice";
+import { addLocation, UserLocation } from "./locations-slice";
 import { PlusOutlined } from "@ant-design/icons";
 
 export const AddLocationModal = () => {

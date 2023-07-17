@@ -2,24 +2,41 @@ import { Button, Dropdown, Menu, MenuProps, Typography } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { useAppDispatch, useTypedSelector } from "../app/store";
 import {
+	removeLocation,
 	selectActiveLocationId,
 	selectLocations,
 	setActiveLocation,
 	UserLocation,
-} from "../app/locations-slice";
+} from "./locations-slice";
 import { AddLocationModal } from "./add-location-modal";
 
-const MenuItem = ({ location }: { location: UserLocation }) => {
-	const items = [
+type MenuItem = Required<MenuProps>["items"][number];
+
+const MenuItem = ({
+	location,
+	canBeDeleted = true,
+}: {
+	location: UserLocation;
+	canBeDeleted?: boolean;
+}) => {
+	const dispatch = useAppDispatch();
+
+	const items: MenuItem[] = [
 		{
 			key: "rename",
 			label: "Переименовать",
 		},
-		{
-			key: "delete",
-			label: "Удалить",
-		},
+		canBeDeleted
+			? {
+					key: "delete",
+					label: "Удалить",
+			  }
+			: null,
 	];
+
+	const handleMenuClick: MenuProps["onClick"] = () => {
+		dispatch(removeLocation({ id: location.id }));
+	};
 
 	const label = `Широта ${location.latitude}, Долгота: ${location.longitude}`;
 	return (
@@ -28,7 +45,7 @@ const MenuItem = ({ location }: { location: UserLocation }) => {
 			style={{ justifyContent: "space-between", alignItems: "center", height: "100%" }}
 		>
 			<Typography.Text ellipsis>{label}</Typography.Text>
-			<Dropdown menu={{ items }} trigger={["click"]}>
+			<Dropdown menu={{ items, onClick: handleMenuClick }} trigger={["click"]}>
 				<Button
 					type="text"
 					shape="circle"
@@ -47,9 +64,9 @@ export const Locations = () => {
 	const locations = useTypedSelector(selectLocations);
 	const activeLocationId = useTypedSelector(selectActiveLocationId);
 
-	const menuItems = locations.map<Required<MenuProps>["items"][number]>((l) => ({
-		key: l.latitude + l.longitude,
-		label: <MenuItem location={l} />,
+	const menuItems = locations.map<MenuItem>((l, idx) => ({
+		key: l.id,
+		label: <MenuItem location={l} canBeDeleted={Boolean(idx)} />,
 	}));
 
 	const handleClick: MenuProps["onClick"] = ({ key, domEvent }) => {
