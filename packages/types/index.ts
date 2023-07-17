@@ -80,7 +80,7 @@ export interface Fact {
 	prec_strength: number;
 	is_thunder: boolean;
 	wind_speed: number;
-	wind_dir: string;
+	wind_dir: WindDir;
 	pressure_mm: number;
 	pressure_pa: number;
 	humidity: number;
@@ -132,7 +132,7 @@ export interface Evening {
 	temp_max: number;
 	wind_speed: number;
 	wind_gust: number;
-	wind_dir: string;
+	wind_dir: WindDir;
 	pressure_mm: number;
 	pressure_pa: number;
 	humidity: number;
@@ -160,7 +160,7 @@ export interface Night {
 	temp_max: number;
 	wind_speed: number;
 	wind_gust: number;
-	wind_dir: string;
+	wind_dir: WindDir;
 	pressure_mm: number;
 	pressure_pa: number;
 	humidity: number;
@@ -186,7 +186,7 @@ export interface NightShort {
 	temp: number;
 	wind_speed: number;
 	wind_gust: number;
-	wind_dir: string;
+	wind_dir: WindDir;
 	pressure_mm: number;
 	pressure_pa: number;
 	humidity: number;
@@ -213,7 +213,7 @@ export interface DayShort {
 	temp_min: number;
 	wind_speed: number;
 	wind_gust: number;
-	wind_dir: string;
+	wind_dir: WindDir;
 	pressure_mm: number;
 	pressure_pa: number;
 	humidity: number;
@@ -241,7 +241,7 @@ export interface Morning {
 	temp_max: number;
 	wind_speed: number;
 	wind_gust: number;
-	wind_dir: string;
+	wind_dir: WindDir;
 	pressure_mm: number;
 	pressure_pa: number;
 	humidity: number;
@@ -303,7 +303,7 @@ export interface Hour {
 	prec_type: number;
 	prec_strength: number;
 	is_thunder: boolean;
-	wind_dir: string;
+	wind_dir: WindDir;
 	wind_speed: number;
 	wind_gust: number;
 	pressure_mm: number;

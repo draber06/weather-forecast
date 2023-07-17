@@ -1,3 +1,5 @@
+import { round } from "lodash-es";
+
 /**
  * Return the date string in this format - hh:mm, DD MMM
  * @param date
@@ -15,7 +17,9 @@ export const formatCurrentTime = (date: string): string => {
 };
 
 /**
- * Get an icon according to Yandex Weather guidelines (https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html#resp-format__fact)
+ * Get an icon according to Yandex Weather guidelines
+ * https://yandex.ru/dev/weather/doc/dg/concepts/forecast-info.html#resp-format__fact
+ *
  * @param name
  * @returns {string}
  */
@@ -38,4 +42,26 @@ export const getIconUrl = (name: string): string =>
 export const formatTemperature = (t: number): string => {
 	const formattedT = t > 0 ? "+" + t : t;
 	return formattedT + "°";
+};
+
+/**
+ * Format longitude and latitude
+ *
+ * @example
+ * // returns 80 с.ш., 100 в.д.
+ * formatCoords(80, 100)
+ *
+ * @example
+ * // returns 80 ю.ш., 100 з.д.
+ * formatCoords(-80, -100)
+ *
+ * @param lat - latitude
+ * @param lon - longitude
+ * @returns {string}
+ */
+export const getLocationAlias = ({ lat, lon }: { lat: number; lon: number }): string => {
+	const latUnits = lat >= 0 ? "с.ш." : "ю.ш.";
+	const longUnits = lon >= 0 ? "в.д." : "з.д.";
+
+	return `${round(lat, 5)} ${latUnits}` + ", " + `${round(lon, 5)} ${longUnits}`;
 };

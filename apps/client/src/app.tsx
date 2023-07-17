@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import { ReactComponent as LogoIcon } from "./assets/logo-white.svg";
 import { Locations } from "./locations/locations";
 
+import { getLocationAlias } from "./utils";
+import { chain, isNull } from "lodash-es";
+
 const { Content } = Layout;
 
 const options: PositionOptions = {
@@ -58,40 +61,44 @@ export const App = () => {
 
 	if (!weather) return;
 
-	const title = Object.values(weather.geo_object)
-		.filter((v) => v)
-		.map((v) => v.name)
-		.slice(0, 2)
-		.join(", ");
+	const title = chain(weather.geo_object)
+		.reject(isNull)
+		.map("name")
+		.take(2)
+		.concat(getLocationAlias(weather.info))
+		.join(", ")
+		.value();
 
 	return (
-		<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh", minWidth: 1200 }}>
-			<Layout.Header>
-				<a href="https://yandex.ru/pogoda/">
-					<LogoIcon style={{ verticalAlign: "middle" }} height={32} />
-				</a>
-			</Layout.Header>
-			<Layout hasSider>
-				<Layout.Sider
-					style={{ overflow: "hidden", padding: "16px 8px" }}
-					width={320}
-					theme="light"
-				>
-					<Locations />
-				</Layout.Sider>
-				<Layout style={{ padding: "16px 24px 24px" }}>
-					<Typography.Title>{title}</Typography.Title>
-					<Content style={{ padding: 24, background: token.colorBgContainer }}>
-						<Space direction="vertical" size={15}>
-							<Space align="start" size={14}>
-								<WeatherNowInfo weather={weather} />
-								<WeatherNowDescription weather={weather} />
-							</Space>
-							<Divider style={{ margin: 0 }} />
+		<Layout>
+			<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh", minWidth: 1200 }}>
+				<Layout.Header>
+					<a href="https://yandex.ru/pogoda/">
+						<LogoIcon style={{ verticalAlign: "middle" }} height={32} />
+					</a>
+				</Layout.Header>
+				<Layout hasSider>
+					<Layout.Sider
+						style={{ overflow: "hidden", padding: "24px 0" }}
+						width={320}
+						theme="light"
+					>
+						<Locations />
+					</Layout.Sider>
+					<Layout style={{ padding: "16px 24px 24px" }}>
+						<Typography.Title>{title}</Typography.Title>
+						<Content style={{ padding: 24, background: token.colorBgContainer }}>
+							<Space direction="vertical" size={15}>
+								<Space align="start" size={14}>
+									<WeatherNowInfo weather={weather} />
+									<WeatherNowDescription weather={weather} />
+								</Space>
+								<Divider style={{ margin: 0 }} />
 
-							<Forecasts forecasts={weather.forecasts} />
-						</Space>
-					</Content>
+								<Forecasts forecasts={weather.forecasts} />
+							</Space>
+						</Content>
+					</Layout>
 				</Layout>
 			</Layout>
 		</Layout>

@@ -1,9 +1,13 @@
-import { PayloadAction, createSlice, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
+import { round } from "lodash-es";
+import { getLocationAlias } from "../utils";
 
-// name is kinda strange because there are built-in types like GeoLocationPosition, Location, etc.
+// name is kinda strange because there are a lot of  built-in types like GeoLocationPosition, Location, etc.
 export type UserLocation = {
 	id: string;
+	title: string;
+	alias: string;
 	latitude: number;
 	longitude: number;
 	createdAt: number;
@@ -35,15 +39,23 @@ const locationsSlice = createSlice({
 				}
 			},
 			prepare: (payload: Pick<UserLocation, "latitude" | "longitude">) => {
+				// Leave no more than  7 decimal places for good accuracy (consistent to yandex api)
+				// example - 0.0000001 = 11.1 mm
+				const latitude = round(payload.latitude, 7);
+				const longitude = round(payload.longitude, 7);
 				return {
 					payload: {
-						id: String(payload.latitude + payload.longitude),
-						...payload,
+						latitude,
+						longitude,
+						id: String(latitude + longitude),
+						title: "",
+						alias: getLocationAlias({ lat: latitude, lon: longitude }),
 						createdAt: Date.now(),
 					},
 				};
 			},
 		},
+		updateLocation: adapter.updateOne,
 		removeLocation(state, { payload }: PayloadAction<{ id: string }>) {
 			adapter.removeOne(state, payload.id);
 			// TODO - it doesn't work at the moment
@@ -57,7 +69,7 @@ const locationsSlice = createSlice({
 	},
 });
 
-export const { addLocation, removeLocation, setLocationError, setActiveLocation } =
+export const { addLocation, removeLocation, setLocationError, setActiveLocation, updateLocation } =
 	locationsSlice.actions;
 
 export default locationsSlice.reducer;

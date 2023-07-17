@@ -9,7 +9,7 @@ export const WeatherNowInfo = ({ weather }: { weather: Weather }) => {
 		<Space align="center" size={10}>
 			<Typography.Text>Сейчас</Typography.Text>
 			<Space size={2}>
-				<ClockCircleOutlined style={{ fontSize: 11 }} />
+				<ClockCircleOutlined style={{ fontSize: 11, marginRight: 3 }} />
 				<time dateTime={weather.now_dt} style={{ fontSize: 12 }}>
 					{formatCurrentTime(weather.now_dt)}
 				</time>

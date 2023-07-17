@@ -1,15 +1,12 @@
-import { Space, Table, Typography } from "antd";
-import { formatTemperature, getIconUrl } from "../utils";
+import { Space, Table, Typography, TableColumnsType } from "antd";
 import { Day, Forecast } from "types";
-import type { ColumnsType } from "antd/es/table";
+import { chain } from "lodash-es";
 import { WindDirection } from "../components/wind-direction";
-
+import { formatTemperature, getIconUrl } from "../utils";
 import "./forecast-details.css";
 import { t } from "../locale";
 
-type ForecastColumn = Day & { time_of_day: string };
-
-const columns: ColumnsType<ForecastColumn> = [
+const columns: TableColumnsType<Day & { time_of_day: string }> = [
 	{
 		dataIndex: "time_of_day",
 		render: (_, record) => {
@@ -85,17 +82,10 @@ const columns: ColumnsType<ForecastColumn> = [
 ];
 
 export const ForecastDetails = ({ forecast }: { forecast: Forecast }) => {
-	const parts = (({ morning, day, night, evening }) => ({
-		morning,
-		day,
-		evening,
-		night,
-	}))(forecast.parts);
-
-	const dataSource = Object.entries(parts).map(([k, v]) => ({
-		...v,
-		time_of_day: t(`TimeOfDay|${k}`),
-	})) as ForecastColumn[];
+	const dataSource = chain(forecast.parts)
+		.pick(["morning", "day", "evening", "night"])
+		.map((v, k) => ({ ...v, time_of_day: t(`TimeOfDay|${k}`) }))
+		.value();
 
 	return (
 		<Table
