@@ -37,10 +37,10 @@ export interface Tzinfo {
 }
 
 export interface GeoObject {
-	district: District;
-	locality: Locality;
-	province: Province;
-	country: Country;
+	district: District | null;
+	locality: Locality | null;
+	province: Province | null;
+	country: Country | null;
 }
 
 export interface District {

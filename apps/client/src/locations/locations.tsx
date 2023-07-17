@@ -1,5 +1,5 @@
-import { Button, Dropdown, Menu, MenuProps, Space, Typography } from "antd";
-import { EllipsisOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Menu, MenuProps, Typography } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { useAppDispatch, useTypedSelector } from "../app/store";
 import {
 	selectActiveLocationId,
@@ -7,7 +7,6 @@ import {
 	setActiveLocation,
 	UserLocation,
 } from "../app/locations-slice";
-import { useModal } from "../app/use-modal";
 import { AddLocationModal } from "./add-location-modal";
 
 const MenuItem = ({ location }: { location: UserLocation }) => {
@@ -44,7 +43,6 @@ const MenuItem = ({ location }: { location: UserLocation }) => {
 
 export const Locations = () => {
 	const dispatch = useAppDispatch();
-	const { open } = useModal();
 
 	const locations = useTypedSelector(selectLocations);
 	const activeLocationId = useTypedSelector(selectActiveLocationId);
@@ -55,7 +53,7 @@ export const Locations = () => {
 	}));
 
 	const handleClick: MenuProps["onClick"] = ({ key, domEvent }) => {
-		// skip action button click
+		// do nothing if action button was clicked
 		if (domEvent.defaultPrevented) {
 			return;
 		}
@@ -70,13 +68,8 @@ export const Locations = () => {
 				items={menuItems}
 				selectedKeys={activeLocationId === null ? [] : [activeLocationId]}
 			/>
-			<div className="flex justify-center" style={{ marginTop: 24 }}>
-				<Button type="default" icon={<PlusOutlined />} onClick={open}>
-					Добавить локацию
-				</Button>
 
-				<AddLocationModal />
-			</div>
+			<AddLocationModal />
 		</div>
 	);
 };

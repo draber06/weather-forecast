@@ -58,6 +58,12 @@ export const App = () => {
 
 	if (!weather) return;
 
+	const title = Object.values(weather.geo_object)
+		.filter((v) => v)
+		.map((v) => v.name)
+		.slice(0, 2)
+		.join(", ");
+
 	return (
 		<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh", minWidth: 1200 }}>
 			<Layout.Header>
@@ -74,11 +80,7 @@ export const App = () => {
 					<Locations />
 				</Layout.Sider>
 				<Layout style={{ padding: "16px 24px 24px" }}>
-					<Typography.Title>
-						Погода в{" "}
-						<span className="capitalize">{weather.geo_object.district.name}</span>,{" "}
-						{weather.geo_object.locality.name}
-					</Typography.Title>
+					<Typography.Title>{title}</Typography.Title>
 					<Content style={{ padding: 24, background: token.colorBgContainer }}>
 						<Space direction="vertical" size={15}>
 							<Space align="start" size={14}>
