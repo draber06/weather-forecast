@@ -57,6 +57,7 @@ const columns: ColumnsType<ForecastColumn> = [
 	{
 		title: "Давление мм рт. ст.",
 		dataIndex: "pressure_mm",
+		width: 80,
 	},
 	{
 		title: "Влажность",
@@ -74,6 +75,7 @@ const columns: ColumnsType<ForecastColumn> = [
 				</Space>
 			);
 		},
+		width: 100,
 	},
 	{
 		title: "Ощущается как",

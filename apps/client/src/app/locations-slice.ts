@@ -12,7 +12,7 @@ const adapter = createEntityAdapter<UserLocation>({
 });
 
 const initialState = adapter.getInitialState<{
-	activeLocation: null | number;
+	activeLocation: null | string;
 	error: null | string;
 }>({ activeLocation: null, error: null });
 
@@ -22,16 +22,16 @@ const locationsSlice = createSlice({
 	name: sliceKey,
 	initialState,
 	reducers: {
-		setActiveLocation(state, { payload }: PayloadAction<{ id: number }>) {
+		setActiveLocation(state, { payload }: PayloadAction<{ id: string }>) {
 			state.activeLocation = payload.id;
 		},
 		addLocation(state, action: PayloadAction<UserLocation>) {
 			adapter.addOne(state, action);
 			if (!state.activeLocation) {
-				state.activeLocation = action.payload.latitude + action.payload.longitude;
+				state.activeLocation = String(action.payload.latitude + action.payload.longitude);
 			}
 		},
-		removeLocation(state, { payload }: PayloadAction<{ id: number }>) {
+		removeLocation(state, { payload }: PayloadAction<{ id: string }>) {
 			adapter.removeOne(state, payload.id);
 			if (state.activeLocation === payload.id) {
 				state.activeLocation = null;
@@ -48,10 +48,12 @@ export const { addLocation, removeLocation, setLocationError, setActiveLocation 
 
 export default locationsSlice.reducer;
 
-export const { selectAll: selectLocations } = adapter.getSelectors<RootState>(
-	(state) => state[sliceKey],
-);
+const selectSliceState = (state: RootState) => state[sliceKey];
 
-export const selectActiveLocation = createSelector([(state) => state[sliceKey]], (state) => {
-	return state.activeLocation === null ? null : state.entities[state.activeLocation];
-});
+export const { selectAll: selectLocations } = adapter.getSelectors<RootState>(selectSliceState);
+
+export const selectActiveLocationId = (state: RootState) => state[sliceKey].activeLocation;
+
+export const selectActiveLocation = createSelector([selectSliceState], (state) =>
+	state.activeLocation === null ? null : state.entities[state.activeLocation],
+);
