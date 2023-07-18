@@ -1,9 +1,0 @@
-{
-  "name": "weather-api",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Weather API",
-  "main": "weather-api.js",
-  "module": "weather-api.js",
-  "type": "module"
-}
