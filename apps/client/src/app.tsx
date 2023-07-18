@@ -25,9 +25,13 @@ export const App = () => {
 	const { token } = theme.useToken();
 
 	const activeLocation = useTypedSelector(selectActiveLocation);
-	const { data: weather, status } = useGetWeatherForecastQuery(
+	const {
+		data: weather,
+		isLoading,
+		isError,
+	} = useGetWeatherForecastQuery(
 		{ lat: activeLocation?.latitude ?? 0, lon: activeLocation?.longitude ?? 0 },
-		{ skip: !activeLocation },
+		{ skip: !activeLocation, refetchOnMountOrArgChange: true },
 	);
 
 	useEffect(() => {
@@ -76,7 +80,7 @@ export const App = () => {
 					</Layout.Sider>
 					<Layout style={{ padding: "16px 24px 24px" }}>
 						{weather && (
-							<AsyncSection status={status}>
+							<AsyncSection isLoading={isLoading} isError={isError}>
 								<Typography.Title>{getTitle(weather)}</Typography.Title>
 								<Content
 									style={{ padding: 24, background: token.colorBgContainer }}

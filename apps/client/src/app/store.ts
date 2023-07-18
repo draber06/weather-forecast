@@ -46,6 +46,7 @@ export const createStore = (options?: ConfigureStoreOptions["preloadedState"] | 
 	});
 
 	const persistor = persistStore(store);
+
 	return { store, persistor };
 };
 

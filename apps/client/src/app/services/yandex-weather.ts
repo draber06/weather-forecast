@@ -6,7 +6,6 @@ const baseUrl = `${protocol}//${hostname}:5001`;
 
 export const api = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl }),
-	// tagTypes: ["Weather Forecast"],
 	endpoints: (build) => ({
 		getWeatherForecast: build.query<Weather, { lat: number; lon: number }>({
 			query: (pos) => ({
@@ -14,15 +13,6 @@ export const api = createApi({
 				params: pos,
 			}),
 			transformResponse: (response: { data: Weather }) => response.data,
-			// providesTags: result => {
-			// 	console.log("-----", "result", result);
-			// 	return result
-			// 		? [
-			// 				...result.map(({ id }) => ({ type: "Weather Forecast" as const, id })),
-			// 				{ type: "Weather Forecast", id: "LIST" },
-			// 		  ]
-			// 		: [{ type: "Weather Forecast", id: "LIST" }];
-			// },
 		}),
 	}),
 });

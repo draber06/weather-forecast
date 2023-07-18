@@ -1,20 +1,22 @@
-import { QueryStatus } from "@reduxjs/toolkit/query";
 import { ReactNode } from "react";
 import { Alert, Spin } from "antd";
 
 export const AsyncSection = ({
-	status,
+	isLoading,
+	isError,
 	children,
 }: {
-	status: QueryStatus;
+	isLoading?: boolean;
+	isError?: boolean;
 	children: ReactNode;
 }) => {
-	switch (status) {
-		case QueryStatus.pending:
-			return <Spin size="large" />;
-		case QueryStatus.rejected:
-			return <Alert message="Не удалось получить данные." type="error" />;
-		default:
-			return children;
+	if (isLoading) {
+		return <Spin size="large" />;
 	}
+
+	if (isError) {
+		return <Alert message="Не удалось получить данные." type="error" />;
+	}
+
+	return children;
 };
