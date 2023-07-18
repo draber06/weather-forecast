@@ -6,6 +6,7 @@ export default defineConfig({
 	plugins: [react(), svgr()],
 	server: {
 		open: true,
+		host: true,
 	},
 	build: {
 		outDir: "dist",

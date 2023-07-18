@@ -1,7 +1,7 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"globalDependencies": ["**/.env.*local"],
-	"globalEnv": ["PORT"],
+	"globalEnv": ["PORT", "YANDEX_WEATHER_API_KEY"],
 	"pipeline": {
 		"build": {
 			"outputs": ["dist/**", "build/**", "server/**", "public/build/**"],
