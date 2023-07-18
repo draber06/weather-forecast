@@ -1,6 +1,6 @@
-import { useAppDispatch, useTypedSelector } from "./store";
+import { useAppDispatch, useTypedSelector } from "../app/store";
 import { useCallback } from "react";
-import { modalActions } from "./modal-slice";
+import { modalActions } from "../app/modal-slice";
 
 export const useModal = () => {
 	const dispatch = useAppDispatch();

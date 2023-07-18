@@ -3,7 +3,6 @@ import { RootState } from "../app/store";
 import { round } from "lodash";
 import { getLocationAlias } from "../utils";
 
-// name is kinda strange because there are a lot of  built-in types like GeoLocationPosition, Location, etc.
 export type UserLocation = {
 	id: string;
 	title: string;
