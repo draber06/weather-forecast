@@ -10,7 +10,6 @@ export const AddLocationModal = () => {
 	const [form] = Form.useForm<UserLocation>();
 
 	const onOk = async () => {
-		// TODO does it make sense to check if location unique or replacing it is good enough?
 		try {
 			const values = await form.validateFields();
 			form.resetFields();

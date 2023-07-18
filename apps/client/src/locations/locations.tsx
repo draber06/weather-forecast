@@ -22,6 +22,7 @@ export const Locations = () => {
 		if (domEvent.defaultPrevented) {
 			return;
 		}
+
 		dispatch(setActiveLocation({ id: key }));
 	};
 

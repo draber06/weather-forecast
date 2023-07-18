@@ -22,7 +22,9 @@ export const LocationItem = ({ location, canBeDeleted = true }: MenuItemProps) =
 			: null,
 	].filter(Boolean);
 
-	const handleMenuClick: MenuProps["onClick"] = () => {
+	const handleMenuClick: MenuProps["onClick"] = ({ domEvent }) => {
+		// help main menu listener to not react on it
+		domEvent.preventDefault();
 		dispatch(removeLocation({ id: location.id }));
 	};
 

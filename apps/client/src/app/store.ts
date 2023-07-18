@@ -28,7 +28,6 @@ const persistConfig: PersistConfig<RootState> = {
 	storage,
 	whitelist: [LOCATIONS_SLICE_KEY],
 	version: 1,
-	debug: true,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
