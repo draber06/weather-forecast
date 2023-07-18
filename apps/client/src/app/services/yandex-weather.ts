@@ -12,6 +12,7 @@ export const api = createApi({
 		timeout: 5000,
 		headers: {
 			"X-Yandex-API-Key": API_KEY,
+			"Access-Control-Allow-Origin": "*",
 		},
 	}),
 	endpoints: (build) => ({
