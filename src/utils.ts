@@ -1,5 +1,5 @@
 import { chain, isNull, round } from "lodash";
-import { Weather } from "types";
+import { Weather } from "./types";
 
 /**
  * Return the date string in this format - hh:mm, DD MMM

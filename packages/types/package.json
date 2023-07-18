@@ -1,8 +1,0 @@
-{
-	"name": "types",
-	"main": "./index.ts",
-	"types": "./index.ts",
-	"publishConfig": {
-		"access": "public"
-	}
-}
