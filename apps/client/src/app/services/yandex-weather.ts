@@ -12,15 +12,13 @@ export const api = createApi({
 		timeout: 5000,
 		headers: {
 			"X-Yandex-API-Key": API_KEY,
-			"Access-Control-Allow-Origin": "*",
 		},
 	}),
 	endpoints: (build) => ({
 		getWeatherForecast: build.query<Weather, { lat: number; lon: number }>({
 			query: (pos) => ({
 				url: WEATHER_API_URL,
-				params: pos,
-				lang: "ru_RU",
+				params: { ...pos, lang: "ru_RU" },
 			}),
 		}),
 	}),
