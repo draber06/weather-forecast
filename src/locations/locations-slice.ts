@@ -34,9 +34,7 @@ const locationsSlice = createSlice({
 		addLocation: {
 			reducer: (state, action: PayloadAction<UserLocation>) => {
 				adapter.addOne(state, action);
-				if (!state.activeLocation) {
-					state.activeLocation = action.payload.id;
-				}
+				state.activeLocation = action.payload.id;
 			},
 			prepare: (payload: Pick<UserLocation, "latitude" | "longitude">) => {
 				// Leave no more than  7 decimal places for good accuracy (consistent to yandex api)

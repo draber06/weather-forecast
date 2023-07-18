@@ -1,3 +1,4 @@
+/* eslint-env node */
 export default async (request, response) => {
 	try {
 		const url = new URL("https://api.weather.yandex.ru/v2/forecast");
@@ -7,7 +8,6 @@ export default async (request, response) => {
 		url.searchParams.set("lang", "ru_RU");
 
 		const res = await fetch(url, {
-			// eslint-disable-next-line no-undef,turbo/no-undeclared-env-vars
 			headers: { "X-Yandex-API-Key": process.env.YANDEX_WEATHER_API_KEY },
 		});
 
