@@ -1,8 +1,7 @@
-.ant-segmented {
-    .ant-segmented-item-label {
-        padding: 8px;
-        line-height: 1;
-    }
+.ant-segmented > .ant-segmented-item-label {
+    padding: 8px;
+    line-height: 1;
+
 }
 
 .ant-tabs-nav-list {
