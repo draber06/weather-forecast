@@ -1,4 +1,4 @@
-import { chain, isNull, round } from "lodash-es";
+import { chain, isNull, round } from "lodash";
 import { Weather } from "types";
 
 /**

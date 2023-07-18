@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
-import { round } from "lodash-es";
+import { round } from "lodash";
 import { getLocationAlias } from "../utils";
 
 // name is kinda strange because there are a lot of  built-in types like GeoLocationPosition, Location, etc.

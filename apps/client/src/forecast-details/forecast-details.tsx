@@ -1,6 +1,6 @@
 import { Space, Table, Typography, TableColumnsType } from "antd";
 import { Day, Forecast } from "types";
-import { chain } from "lodash-es";
+import { chain } from "lodash";
 import { WindDirection } from "../components/wind-direction";
 import { formatTemperature, getIconUrl } from "../utils";
 import "./forecast-details.css";

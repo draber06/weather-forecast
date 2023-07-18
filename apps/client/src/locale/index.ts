@@ -1,5 +1,5 @@
 import l from "./ru.json";
-import { get, has } from "lodash-es";
+import { get, has } from "lodash";
 
 /**
  * Translate string by key
