@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Alert, Spin } from "antd";
+import { Alert, Card, Empty, Spin } from "antd";
 
 export const AsyncSection = ({
 	isLoading,
@@ -11,7 +11,11 @@ export const AsyncSection = ({
 	children: ReactNode;
 }) => {
 	if (isLoading) {
-		return <Spin size="large" />;
+		return (
+			<Card>
+				<Empty image={<Spin size="large" />} description="Загрузка..." />
+			</Card>
+		);
 	}
 
 	if (isError) {
