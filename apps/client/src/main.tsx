@@ -8,6 +8,7 @@ import { App } from "./app";
 
 import "antd/dist/reset.css";
 import "./main.css";
+import { FullScreenLoader } from "./components/full-screen-loader";
 
 const theme: ThemeConfig = {
 	token: {
@@ -26,7 +27,7 @@ const { store, persistor } = createStore();
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<PersistGate persistor={persistor}>
+			<PersistGate persistor={persistor} loading={<FullScreenLoader />}>
 				<ConfigProvider theme={theme}>
 					<App />
 				</ConfigProvider>

@@ -1,4 +1,5 @@
-import { round } from "lodash-es";
+import { chain, isNull, round } from "lodash-es";
+import { Weather } from "types";
 
 /**
  * Return the date string in this format - hh:mm, DD MMM
@@ -64,4 +65,14 @@ export const getLocationAlias = ({ lat, lon }: { lat: number; lon: number }): st
 	const longUnits = lon >= 0 ? "в.д." : "з.д.";
 
 	return `${round(lat, 5)} ${latUnits}` + ", " + `${round(lon, 5)} ${longUnits}`;
+};
+
+export const getTitle = (weather: Weather) => {
+	return chain(weather.geo_object)
+		.reject(isNull)
+		.map("name")
+		.take(2)
+		.concat(getLocationAlias(weather.info))
+		.join(", ")
+		.value();
 };

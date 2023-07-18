@@ -1,16 +1,16 @@
 import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
 import { addLocation, selectActiveLocation, setLocationError } from "./locations/locations-slice";
-import { Layout, Space, Typography, Divider, theme } from "antd";
+import { Divider, Layout, Space, theme, Typography } from "antd";
 import { WeatherNowInfo } from "./weather-now/weather-now-info";
 import { WeatherNowDescription } from "./weather-now/weather-now-description";
 import { Forecasts } from "./forecast-details/forecasts";
+import { AsyncSection } from "./components/async-section";
 import { useEffect } from "react";
 import { ReactComponent as LogoIcon } from "./assets/logo-white.svg";
 import { Locations } from "./locations/locations";
 
-import { getLocationAlias } from "./utils";
-import { chain, isNull } from "lodash-es";
+import { getTitle } from "./utils";
 
 const { Content } = Layout;
 
@@ -25,7 +25,7 @@ export const App = () => {
 	const { token } = theme.useToken();
 
 	const activeLocation = useTypedSelector(selectActiveLocation);
-	const { data: weather } = useGetWeatherForecastQuery(
+	const { data: weather, status } = useGetWeatherForecastQuery(
 		{ lat: activeLocation?.latitude ?? 0, lon: activeLocation?.longitude ?? 0 },
 		{ skip: !activeLocation },
 	);
@@ -50,7 +50,6 @@ export const App = () => {
 						break;
 					case "denied":
 						// TODO show button "Разрешить доступ к данным геопозиции"
-
 						console.log(res.state);
 				}
 			});
@@ -58,16 +57,6 @@ export const App = () => {
 			console.log("Oops! It looks like Geolocation API is not supported by the browser.");
 		}
 	}, [dispatch]);
-
-	if (!weather) return;
-
-	const title = chain(weather.geo_object)
-		.reject(isNull)
-		.map("name")
-		.take(2)
-		.concat(getLocationAlias(weather.info))
-		.join(", ")
-		.value();
 
 	return (
 		<Layout>
@@ -86,18 +75,24 @@ export const App = () => {
 						<Locations />
 					</Layout.Sider>
 					<Layout style={{ padding: "16px 24px 24px" }}>
-						<Typography.Title>{title}</Typography.Title>
-						<Content style={{ padding: 24, background: token.colorBgContainer }}>
-							<Space direction="vertical" size={15}>
-								<Space align="start" size={14}>
-									<WeatherNowInfo weather={weather} />
-									<WeatherNowDescription weather={weather} />
-								</Space>
-								<Divider style={{ margin: 0 }} />
+						{weather && (
+							<AsyncSection status={status}>
+								<Typography.Title>{getTitle(weather)}</Typography.Title>
+								<Content
+									style={{ padding: 24, background: token.colorBgContainer }}
+								>
+									<Space direction="vertical" size={15}>
+										<Space align="start" size={14}>
+											<WeatherNowInfo weather={weather} />
+											<WeatherNowDescription weather={weather} />
+										</Space>
+										<Divider style={{ margin: 0 }} />
 
-								<Forecasts forecasts={weather.forecasts} />
-							</Space>
-						</Content>
+										<Forecasts forecasts={weather.forecasts} />
+									</Space>
+								</Content>
+							</AsyncSection>
+						)}
 					</Layout>
 				</Layout>
 			</Layout>

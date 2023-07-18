@@ -59,6 +59,7 @@ const locationsSlice = createSlice({
 		removeLocation(state, { payload }: PayloadAction<{ id: string }>) {
 			adapter.removeOne(state, payload.id);
 			// TODO - it doesn't work at the moment
+			// console.log(state.activeLocation === payload.id, state.ids[0]);
 			if (state.activeLocation === payload.id) {
 				state.activeLocation = String(state.ids[0]);
 			}
