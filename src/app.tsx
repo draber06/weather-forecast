@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useGetWeatherForecastQuery } from "./app/services/yandex-weather";
 import { useAppDispatch, useTypedSelector } from "./app/store";
 import { addLocation, selectActiveLocation } from "./locations/locations-slice";
@@ -42,57 +42,55 @@ export const App = () => {
 	}, [JSON.stringify(coords), dispatch]);
 
 	return (
-		<Layout>
-			<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh", minWidth: 1200 }}>
-				<Layout.Header>
-					<a href="https://yandex.ru/pogoda/">
-						<LogoIcon style={{ verticalAlign: "middle" }} height={32} />
-					</a>
-				</Layout.Header>
-				<Layout hasSider>
-					<Layout.Sider
-						style={{ overflow: "hidden", padding: "24px 0" }}
-						width={320}
-						theme="light"
-					>
-						{isGeolocationAvailable && isGeolocationEnabled && <Locations />}
-					</Layout.Sider>
-					<Layout style={{ padding: "16px 24px 24px" }}>
-						{!isGeolocationAvailable ? (
-							<Card>
-								<Empty description="К сожалению ваш бразуер не поддерживает геолокацию" />
-							</Card>
-						) : !isGeolocationEnabled ? (
-							<Card>
-								<Empty description="Пожалуйста разрешите доступ к данными геопозиции в настройках вашего бразуера!" />
-							</Card>
-						) : (
-							<AsyncSection isLoading={isLoading} isError={isError}>
-								{weather && (
-									<>
-										<Typography.Title>{getTitle(weather)}</Typography.Title>
-										<Layout.Content
-											style={{
-												padding: 24,
-												background: token.colorBgContainer,
-											}}
-										>
-											<Space direction="vertical" size={15}>
-												<Space align="start" size={14}>
-													<WeatherNowInfo weather={weather} />
-													<WeatherNowDescription weather={weather} />
-												</Space>
-												<Divider style={{ margin: 0 }} />
-
-												<Forecasts forecasts={weather.forecasts} />
+		<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh", minWidth: 1200 }}>
+			<Layout.Header>
+				<a href="https://yandex.ru/pogoda/">
+					<LogoIcon style={{ verticalAlign: "middle" }} height={32} />
+				</a>
+			</Layout.Header>
+			<Layout hasSider>
+				<Layout.Sider
+					style={{ overflow: "hidden", padding: "24px 0" }}
+					width={320}
+					theme="light"
+				>
+					{isGeolocationAvailable && isGeolocationEnabled && <Locations />}
+				</Layout.Sider>
+				<Layout.Content style={{ padding: "16px 0 24px 24px" }}>
+					{!isGeolocationAvailable ? (
+						<Card>
+							<Empty description="К сожалению ваш бразуер не поддерживает геолокацию" />
+						</Card>
+					) : !isGeolocationEnabled ? (
+						<Card>
+							<Empty description="Пожалуйста разрешите доступ к данными геопозиции в настройках вашего бразуера!" />
+						</Card>
+					) : (
+						<AsyncSection isLoading={isLoading} isError={isError}>
+							{weather && (
+								<>
+									<Typography.Title>{getTitle(weather)}</Typography.Title>
+									<Layout
+										style={{
+											padding: 24,
+											background: token.colorBgContainer,
+										}}
+									>
+										<Space direction="vertical" size={15}>
+											<Space align="start" size={14}>
+												<WeatherNowInfo weather={weather} />
+												<WeatherNowDescription weather={weather} />
 											</Space>
-										</Layout.Content>
-									</>
-								)}
-							</AsyncSection>
-						)}
-					</Layout>
-				</Layout>
+											<Divider style={{ margin: 0 }} />
+
+											<Forecasts forecasts={weather.forecasts} />
+										</Space>
+									</Layout>
+								</>
+							)}
+						</AsyncSection>
+					)}
+				</Layout.Content>
 			</Layout>
 		</Layout>
 	);
