@@ -23,7 +23,7 @@
     "module": "ESNext",
     "noEmit": true,
     "resolveJsonModule": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "target": "ESNext",
     "allowSyntheticDefaultImports": true,
     "types": [
@@ -32,6 +32,6 @@
     ]
   },
   "include": [
-    "src/src"
+    "src"
   ]
 }

@@ -1,8 +1,8 @@
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { Card, Space, Typography, Image } from "antd";
-import { Weather } from "types";
 import { formatCurrentTime, formatTemperature, getIconUrl } from "../utils";
 import { t } from "../locale";
+import {Weather} from "../types";
 
 export const WeatherNowInfo = ({ weather }: { weather: Weather }) => {
 	const title = (

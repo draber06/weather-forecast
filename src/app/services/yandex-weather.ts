@@ -1,8 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Weather } from "types";
-
-// const { protocol, hostname } = window.location;
-// const devBaseUrl = `${protocol}//${hostname}:5001`;
+import { Weather } from "../../types";
 
 export const api = createApi({
 	baseQuery: fetchBaseQuery({

@@ -1,7 +1,7 @@
 import { theme, Typography } from "antd";
 import { ReactComponent as WindDirectionIcon } from "../assets/wind-direction.svg";
-import { WindDir } from "types";
 import { t } from "../locale";
+import { WindDir } from "../types";
 
 // Wind direction
 const mapper = {

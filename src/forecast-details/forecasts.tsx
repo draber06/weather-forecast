@@ -1,9 +1,9 @@
 import { Space, Tabs, theme, Typography } from "antd";
-import { Forecast } from "types";
 import { formatTemperature, getIconUrl } from "../utils";
 
 import "./forecasts.css";
 import { ForecastDetails } from "./forecast-details";
+import { Forecast } from "../types";
 
 const ForecastBriefly = ({ forecast }: { forecast: Forecast }) => {
 	const { token } = theme.useToken();
