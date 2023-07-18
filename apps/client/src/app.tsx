@@ -62,6 +62,8 @@ export const App = () => {
 		}
 	}, [dispatch]);
 
+	console.log("-----", "weather", weather);
+
 	return (
 		<Layout>
 			<Layout style={{ maxWidth: 1200, margin: "auto", minHeight: "100vh", minWidth: 1200 }}>
